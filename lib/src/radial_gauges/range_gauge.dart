@@ -1,0 +1,204 @@
+import 'package:at_gauges/src/utils/constants.dart';
+import 'package:at_gauges/src/utils/utils.dart';
+import 'package:flutter/material.dart';
+
+import './painters/range_painter.dart';
+import './range.dart';
+import '../utils/enums.dart';
+
+class RangeGauge extends StatefulWidget {
+  /// Creates a Range Pointer Gauge.
+  ///
+  /// The [minValue], [maxValue] and [ranges] must not be null.
+  const RangeGauge({
+    this.minValue = 0,
+    required this.maxValue,
+    required this.actualValue,
+    required this.ranges,
+    this.size = 200,
+    this.title,
+    this.titlePosition = TitlePosition.top,
+    this.pointerColor,
+    this.decimalPlaces = 0,
+    this.isAnimate = true,
+    this.milliseconds = kDefaultAnimationDuration,
+    this.strokeWidth = 70,
+    this.actualValueTextStyle,
+    this.maxDegree = kDefaultRangeGaugeMaxDegree,
+    this.startDegree = kDefaultRangeGaugeStartDegree,
+    this.isLegend = false,
+    Key? key,
+  })  : assert(actualValue <= maxValue,
+            'actualValue must be less than or equal to maxValue'),
+        assert(startDegree <= 360, 'startDegree must be less than 360'),
+        assert(actualValue >= minValue,
+            'actualValue must be greater than or equal to minValue'),
+        super(key: key);
+
+  /// Sets the minimum value of the gauge.
+  final double minValue;
+
+  /// Sets the maximum value of the gauge.
+  final double maxValue;
+
+  /// Sets the pointer value of the gauge.
+  final double actualValue;
+
+  /// Sets the ranges for the gauge.
+  final List<Range> ranges;
+
+  /// Sets the height and width of the gauge.
+  ///
+  /// If the parent widget has unconstrained height like a [ListView], wrap the gauge in a [SizedBox] to better control it's size.
+  final double size;
+
+  /// Sets the title of the gauge.
+  final Text? title;
+
+  /// Sets the position of the title.
+  final TitlePosition titlePosition;
+
+  /// Sets the pointer color of the gauge.
+  final Color? pointerColor;
+
+  /// Controls how much decimal places will be shown for the [minValue],[maxValue] and [actualValue].
+  final int decimalPlaces;
+
+  /// Toggle on and off animation.
+  final bool isAnimate;
+
+  /// Sets a duration in milliseconds to control the speed of the animation.
+  final int milliseconds;
+
+  /// Sets the stroke width of the ranges.
+  final double strokeWidth;
+
+  /// Sets the [TextStyle] for the actualValue.
+  final TextStyle? actualValueTextStyle;
+
+  /// Sets the [maxDegree] for the gauge.
+  final double maxDegree;
+
+  /// Sets the [startDegree] of the gauge.
+  final double startDegree;
+
+  /// Toggle on and off legend.
+  final bool isLegend;
+
+  @override
+  State<RangeGauge> createState() => _RangeGaugeState();
+}
+
+class _RangeGaugeState extends State<RangeGauge>
+    with SingleTickerProviderStateMixin {
+  late Animation<double> animation;
+  late AnimationController animationController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    double sweepAngleRadian = Utils.actualValueToSweepAngleRadian(
+        minValue: widget.minValue,
+        actualValue: widget.actualValue,
+        maxValue: widget.maxValue,
+        maxDegrees: widget.maxDegree);
+
+    double upperBound = Utils.degreesToRadians(widget.maxDegree);
+
+    animationController = AnimationController(
+        duration: Utils.getDuration(
+            isAnimate: widget.isAnimate, userMilliseconds: widget.milliseconds),
+        vsync: this,
+        upperBound: upperBound);
+
+    animation = Tween<double>().animate(animationController)
+      ..addListener(() {
+        if (animationController.value == sweepAngleRadian) {
+          animationController.stop();
+        }
+
+        setState(() {});
+      });
+
+    animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (animationController.value !=
+        Utils.actualValueToSweepAngleRadian(
+            minValue: widget.minValue,
+            actualValue: widget.actualValue,
+            maxValue: widget.maxValue,
+            maxDegrees: widget.maxDegree)) {
+      animationController.animateTo(
+          Utils.actualValueToSweepAngleRadian(
+              minValue: widget.minValue,
+              actualValue: widget.actualValue,
+              maxValue: widget.maxValue,
+              maxDegrees: widget.maxDegree),
+          duration: Utils.getDuration(
+              isAnimate: widget.isAnimate,
+              userMilliseconds: widget.milliseconds));
+    }
+
+    return FittedBox(
+      child: Column(
+        children: [
+          widget.titlePosition == TitlePosition.top
+              ? SizedBox(
+                  height: widget.strokeWidth - 10,
+                  child: widget.title,
+                )
+              : const SizedBox(
+                  height: 20,
+                ),
+          SizedBox(
+            height: widget.size,
+            width: widget.size,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CustomPaint(
+                painter: RangeGaugePainter(
+                    sweepAngle: animationController.value,
+                    pointerColor: widget.pointerColor,
+                    maxValue:
+                        widget.maxValue.toStringAsFixed(widget.decimalPlaces),
+                    minValue:
+                        widget.minValue.toStringAsFixed(widget.decimalPlaces),
+                    ranges: widget.ranges,
+                    actualValue: widget.actualValue,
+                    decimalPlaces: widget.decimalPlaces,
+                    strokeWidth: widget.strokeWidth,
+                    actualValueTextStyle: widget.actualValueTextStyle,
+                    maxDegree: widget.maxDegree,
+                    startDegree: widget.startDegree,
+                    isLegend: widget.isLegend),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: widget.titlePosition == TitlePosition.bottom
+                ? widget.strokeWidth - 10
+                : 0,
+          ),
+          widget.titlePosition == TitlePosition.bottom
+              ? SizedBox(
+                  height: 30,
+                  child: widget.title,
+                )
+              : const SizedBox(
+                  height: 20,
+                )
+        ],
+      ),
+    );
+  }
+}

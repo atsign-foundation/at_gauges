@@ -8,8 +8,8 @@ Adding the atPlatform logo gives a nice look for your EXAMPLE.md
 The EXAMPLE.md should explain what the package does and how to use it as shown with a working 
 application that covers the main features of the package. 
 -->
-## [package-name] example
-The [package-name] package is designed to make it easy to add [primary-function] to a flutter app with the following features:
+## at_gauges example
+The at_gauges package is designed to make it easy to add beautiful gauges to a flutter app. with the following features:
 - Feature 1
 - Feature 2
 
@@ -19,7 +19,7 @@ way for a developer to assess it and get going with their app.
 Make sure and add in your package ID for the at_app sample.
 -->
 ### Give it a try
-This package includes a working sample application in the [example](https://github.com/atsign-foundation/at_client_sdk/tree/trunk/at_client_mobile/example) directory that demonstrates the key features of the package. To create a personalized copy, use ```at_app create``` as shown below or check it out on GitHub.
+This package includes a working sample application in the [example](https://github.com/atsign-foundation/at_gauges/tree/example) directory that demonstrates the key features of the package. To create a personalized copy, use ```at_app create``` as shown below or check it out on GitHub.
 
 ```sh
 $ flutter pub global activate at_app 
@@ -30,6 +30,8 @@ $ flutter run
 Notes: 
 1. You only need to run ```flutter pub global activate``` once
 2. Use ```at_app.bat``` for Windows
+
+
 
 
 <!---
