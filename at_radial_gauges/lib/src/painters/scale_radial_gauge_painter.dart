@@ -2,10 +2,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import '../../utils/utils.dart';
+import '../utils/utils.dart';
 
-class ScaleGaugePainter extends CustomPainter {
-  ScaleGaugePainter({
+class ScaleRadialGaugePainter extends CustomPainter {
+  ScaleRadialGaugePainter({
     required this.sweepAngle,
     required this.pointerColor,
     required this.minValue,
@@ -143,7 +143,7 @@ class ScaleGaugePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(ScaleGaugePainter oldDelegate) {
+  bool shouldRepaint(ScaleRadialGaugePainter oldDelegate) {
     return true;
   }
 }

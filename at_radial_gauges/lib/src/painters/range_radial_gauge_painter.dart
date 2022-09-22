@@ -2,11 +2,11 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import '../../utils/utils.dart';
-import '../range.dart';
+import '../utils/range.dart';
+import '../utils/utils.dart';
 
-class RangeGaugePainter extends CustomPainter {
-  RangeGaugePainter({
+class RangeRadialGaugePainter extends CustomPainter {
+  RangeRadialGaugePainter({
     required this.sweepAngle,
     required this.pointerColor,
     required this.minValue,
@@ -169,7 +169,7 @@ class RangeGaugePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(RangeGaugePainter oldDelegate) {
+  bool shouldRepaint(RangeRadialGaugePainter oldDelegate) {
     return true;
   }
 }

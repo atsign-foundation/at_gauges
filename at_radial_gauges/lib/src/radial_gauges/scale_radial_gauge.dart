@@ -1,15 +1,15 @@
-import 'package:at_gauges/src/utils/constants.dart';
-import 'package:at_gauges/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 
-import './painters/scale_gauge_painter.dart';
+import '../painters/scale_radial_gauge_painter.dart';
+import '../utils/constants.dart';
 import '../utils/enums.dart';
+import '../utils/utils.dart';
 
-class ScaleGauge extends StatefulWidget {
+class ScaleRadialGauge extends StatefulWidget {
   /// Creates a scale Gauge.
   ///
   /// The [minValue] and [maxValue] must not be null.
-  const ScaleGauge({
+  const ScaleRadialGauge({
     this.minValue = 0,
     required this.maxValue,
     required this.actualValue,
@@ -65,10 +65,10 @@ class ScaleGauge extends StatefulWidget {
   final int duration;
 
   @override
-  State<ScaleGauge> createState() => _ScaleGaugeState();
+  State<ScaleRadialGauge> createState() => _ScaleRadialGaugeState();
 }
 
-class _ScaleGaugeState extends State<ScaleGauge>
+class _ScaleRadialGaugeState extends State<ScaleRadialGauge>
     with SingleTickerProviderStateMixin {
   late Animation<double> animation;
   late AnimationController animationController;
@@ -144,7 +144,7 @@ class _ScaleGaugeState extends State<ScaleGauge>
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: CustomPaint(
-                  painter: ScaleGaugePainter(
+                  painter: ScaleRadialGaugePainter(
                     sweepAngle: animationController.value,
                     pointerColor: widget.arcColor,
                     needleColor: widget.needleColor,

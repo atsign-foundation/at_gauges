@@ -1,16 +1,16 @@
-import 'package:at_gauges/src/utils/constants.dart';
-import 'package:at_gauges/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 
-import './painters/range_painter.dart';
-import './range.dart';
+import '../painters/range_radial_gauge_painter.dart';
+import '../utils/constants.dart';
 import '../utils/enums.dart';
+import '../utils/range.dart';
+import '../utils/utils.dart';
 
-class RangeGauge extends StatefulWidget {
+class RangeRadialGauge extends StatefulWidget {
   /// Creates a Range Pointer Gauge.
   ///
   /// The [minValue], [maxValue] and [ranges] must not be null.
-  const RangeGauge({
+  const RangeRadialGauge({
     this.minValue = 0,
     required this.maxValue,
     required this.actualValue,
@@ -86,10 +86,10 @@ class RangeGauge extends StatefulWidget {
   final bool isLegend;
 
   @override
-  State<RangeGauge> createState() => _RangeGaugeState();
+  State<RangeRadialGauge> createState() => _RangeRadialGaugeState();
 }
 
-class _RangeGaugeState extends State<RangeGauge>
+class _RangeRadialGaugeState extends State<RangeRadialGauge>
     with SingleTickerProviderStateMixin {
   late Animation<double> animation;
   late AnimationController animationController;
@@ -166,7 +166,7 @@ class _RangeGaugeState extends State<RangeGauge>
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: CustomPaint(
-                painter: RangeGaugePainter(
+                painter: RangeRadialGaugePainter(
                     sweepAngle: animationController.value,
                     pointerColor: widget.pointerColor,
                     maxValue:

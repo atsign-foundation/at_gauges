@@ -1,14 +1,15 @@
-import 'package:at_gauges/src/radial_gauges/painters/simple_gauge_painter.dart';
-import 'package:at_gauges/src/utils/constants.dart';
-import 'package:at_gauges/src/utils/enums.dart';
-import 'package:at_gauges/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 
-class SimpleGauge extends StatefulWidget {
+import '../painters/simple_radial_gauge_painter.dart';
+import '../utils/constants.dart';
+import '../utils/enums.dart';
+import '../utils/utils.dart';
+
+class SimpleRadialGauge extends StatefulWidget {
   /// Creates a simple Gauge.
   ///
   /// The [actualValue] and [maxValue] must not be null.
-  const SimpleGauge({
+  const SimpleRadialGauge({
     required this.actualValue,
     required this.maxValue,
     this.title,
@@ -69,10 +70,10 @@ class SimpleGauge extends StatefulWidget {
   final TitlePosition titlePosition;
 
   @override
-  State<SimpleGauge> createState() => _SimpleGaugeState();
+  State<SimpleRadialGauge> createState() => _SimpleRadialGaugeState();
 }
 
-class _SimpleGaugeState extends State<SimpleGauge>
+class _SimpleRadialGaugeState extends State<SimpleRadialGauge>
     with SingleTickerProviderStateMixin {
   late Animation<double> animation;
   late AnimationController animationController;
@@ -146,7 +147,7 @@ class _SimpleGaugeState extends State<SimpleGauge>
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: CustomPaint(
-                painter: SimpleGaugePainter(
+                painter: SimpleRadialGaugePainter(
                   sweepAngle: animationController.value,
                   pointerColor: widget.pointerColor,
                 ),

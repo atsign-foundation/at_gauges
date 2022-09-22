@@ -1,4 +1,4 @@
-import 'package:at_gauges/at_gauges.dart';
+import 'package:at_radial_gauges/at_radial_gauges.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -34,55 +34,51 @@ class MyGauges extends StatelessWidget {
           children: [
             const SizedBox(
               height: 350,
-              child: SimpleGauge(
-                minValue: 0,
+              child: SimpleRadialGauge(
                 actualValue: 50,
                 maxValue: 100,
                 icon: Icon(Icons.water),
                 duration: 500,
                 title: Text(
-                  'Simple Gauge',
+                  'Simple Radial Gauge',
                 ),
               ),
             ),
             const SizedBox(
               height: 350,
-              child: ScaleGauge(
-                minValue: 0,
+              child: ScaleRadialGauge(
                 maxValue: 100,
                 actualValue: 70,
-                title: Text('Scale Gauge'),
+                title: Text('Scale Radial Gauge'),
               ),
             ),
             SizedBox(
               height: 350,
-              child: RangeGauge(
-                minValue: 0,
+              child: RangeRadialGauge(
                 maxValue: 75,
-                actualValue: 50,
+                actualValue: 40,
                 maxDegree: 180,
                 startDegree: 180,
-                isLegend: true,
-                title: const Text('Range Gauge'),
+                title: const Text('Range Radial Gauge'),
                 titlePosition: TitlePosition.top,
                 ranges: [
                   Range(
                     label: 'slow',
                     lowerLimit: 0,
-                    upperLimit: 25,
-                    backgroundColor: Colors.blue,
+                    upperLimit: 50,
+                    backgroundColor: Colors.green,
                   ),
                   Range(
                     label: 'medium',
-                    lowerLimit: 25,
-                    upperLimit: 50,
+                    lowerLimit: 50,
+                    upperLimit: 70,
                     backgroundColor: Colors.orange,
                   ),
                   Range(
                     label: 'fast',
-                    lowerLimit: 50,
+                    lowerLimit: 70,
                     upperLimit: 75,
-                    backgroundColor: Colors.lightGreen,
+                    backgroundColor: Colors.red,
                   ),
                 ],
               ),

@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 
-import 'package:at_gauges/src/utils/constants.dart';
+import 'constants.dart';
 
 class Utils {
   /// Convert [degrees] to radians.

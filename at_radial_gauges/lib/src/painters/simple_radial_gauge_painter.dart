@@ -2,10 +2,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import '../../utils/utils.dart';
+import '../utils/utils.dart';
 
-class SimpleGaugePainter extends CustomPainter {
-  SimpleGaugePainter({
+class SimpleRadialGaugePainter extends CustomPainter {
+  SimpleRadialGaugePainter({
     required this.sweepAngle,
     required this.pointerColor,
     Key? key,

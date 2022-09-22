@@ -5,8 +5,9 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:at_gauges/src/utils/utils.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import '../lib/src/utils/utils.dart';
 
 void main() {
   group('utils functions', () {
@@ -17,22 +18,22 @@ void main() {
     test('degrees should be 360', (() {
       expect(Utils.radiansToDegrees(6.283185307179586), 360);
     }));
-  });
 
-  test('sweepAngle should be 180', (() {
-    expect(
-        Utils.actualValueToSweepAngle(
-            actualValue: 10, maxValue: 20, maxDegrees: 360),
-        180);
-  }));
+    test('sweepAngle should be 180', (() {
+      expect(
+          Utils.actualValueToSweepAngle(
+              actualValue: 10, maxValue: 20, maxDegrees: 360),
+          180);
+    }));
 
-  test('actual value should be 50', () {
-    expect(
-        Utils.sweepAngleToActualValue(
-            sweepAngle: Utils.degreesToRadians(180),
-            maxValue: 100,
-            maxDegrees: 360,
-            minValue: 0),
-        50);
+    test('actual value should be 50', () {
+      expect(
+          Utils.sweepAngleToActualValue(
+              sweepAngle: Utils.degreesToRadians(180),
+              maxValue: 100,
+              maxDegrees: 360,
+              minValue: 0),
+          50);
+    });
   });
 }
