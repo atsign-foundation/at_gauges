@@ -33,7 +33,7 @@ This open source package is written in Dart, supports Flutter and follows the
 - End to end encryption where only the data owner has the keys
 - Private and surveillance free connectivity
 - Create radial gauges
-- <!--- add package features here -->
+  <!--- add package features here -->
 
 We call giving people control of access to their data “flipping the internet”
 and you can learn more about how it works by reading this
@@ -45,7 +45,7 @@ first thing that developers see there and should be written such that it
 lets them quickly assess if it fits their need.
 -->
 ## Get started
-There are three options to get started using this package.
+There are two options to get started using this package.
 
 <!---
 If the package has a template that at_app uses to generate a skeleton app,
@@ -76,10 +76,10 @@ developer to get started.
 <!---
 Make sure to edit the link below to refer to your package repo.
 -->
-Feel free to fork a copy of the source from the [GitHub repo](https://github.com/atsign-foundation/at_gauges). The example code contained there is the same as the template that is used by at_app above.
+Feel free to fork a copy of the source from the [GitHub repo](https://github.com/atsign-foundation/at_gauges).
 
 ```sh
-$ git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY
+$ git clone https://github.com/atsign-foundation/at_gauges
 ```
 
 <!---
