@@ -27,17 +27,13 @@ pull requests and to hear about issues. Include the boilerplate language
 below to add some context to @‎platform packages 
 -->
 This open source package is written in Dart, supports Flutter and follows the
-@‎platform's decentralized, edge computing model with the following features: 
-- Cryptographic control of data access through personal data stores
-- No application backend needed
-- End to end encryption where only the data owner has the keys
-- Private and surveillance free connectivity
-- Create radial gauges
+@‎platform's decentralized, edge computing model with the following widgets: 
+- simple radial gauge
+- Scale radial gauge
+- Range radial gauge
   <!--- add package features here -->
 
-We call giving people control of access to their data “flipping the internet”
-and you can learn more about how it works by reading this
-[overview](https://atsign.dev/docs/overview/).
+We welcome suggestions you may have to create more radial gauges or to add features to gauges already created. 
 
 <!---
 Does this package publish to pub.dev or similar? This README will be the
