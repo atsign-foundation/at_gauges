@@ -16,7 +16,7 @@ class ScaleRadialGauge extends StatefulWidget {
     this.size = 200,
     this.title,
     this.titlePosition = TitlePosition.top,
-    this.arcColor = Colors.blue,
+    this.pointerColor = Colors.blue,
     this.needleColor = Colors.blue,
     this.decimalPlaces = 0,
     this.isAnimate = true,
@@ -49,8 +49,8 @@ class ScaleRadialGauge extends StatefulWidget {
   /// Sets the position of the title.
   final TitlePosition titlePosition;
 
-  /// Sets the arc color of the gauge.
-  final Color arcColor;
+  /// Sets the pointer color of the gauge.
+  final Color pointerColor;
 
   /// Sets the needle color of the gauge.
   final Color needleColor;
@@ -146,7 +146,7 @@ class _ScaleRadialGaugeState extends State<ScaleRadialGauge>
                 child: CustomPaint(
                   painter: ScaleRadialGaugePainter(
                     sweepAngle: animationController.value,
-                    pointerColor: widget.arcColor,
+                    pointerColor: widget.pointerColor,
                     needleColor: widget.needleColor,
                     minValue: widget.minValue,
                     maxValue: widget.maxValue,

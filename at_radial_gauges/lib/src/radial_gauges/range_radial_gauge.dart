@@ -21,8 +21,8 @@ class RangeRadialGauge extends StatefulWidget {
     this.pointerColor,
     this.decimalPlaces = 0,
     this.isAnimate = true,
-    this.milliseconds = kDefaultAnimationDuration,
-    this.strokeWidth = 70,
+    this.duration = kDefaultAnimationDuration,
+    this.rangeStrokeWidth = 70,
     this.actualValueTextStyle,
     this.maxDegree = kDefaultRangeGaugeMaxDegree,
     this.startDegree = kDefaultRangeGaugeStartDegree,
@@ -68,10 +68,10 @@ class RangeRadialGauge extends StatefulWidget {
   final bool isAnimate;
 
   /// Sets a duration in milliseconds to control the speed of the animation.
-  final int milliseconds;
+  final int duration;
 
   /// Sets the stroke width of the ranges.
-  final double strokeWidth;
+  final double rangeStrokeWidth;
 
   /// Sets the [TextStyle] for the actualValue.
   final TextStyle? actualValueTextStyle;
@@ -108,7 +108,7 @@ class _RangeRadialGaugeState extends State<RangeRadialGauge>
 
     animationController = AnimationController(
         duration: Utils.getDuration(
-            isAnimate: widget.isAnimate, userMilliseconds: widget.milliseconds),
+            isAnimate: widget.isAnimate, userMilliseconds: widget.duration),
         vsync: this,
         upperBound: upperBound);
 
@@ -145,8 +145,7 @@ class _RangeRadialGaugeState extends State<RangeRadialGauge>
               maxValue: widget.maxValue,
               maxDegrees: widget.maxDegree),
           duration: Utils.getDuration(
-              isAnimate: widget.isAnimate,
-              userMilliseconds: widget.milliseconds));
+              isAnimate: widget.isAnimate, userMilliseconds: widget.duration));
     }
 
     return FittedBox(
@@ -154,7 +153,7 @@ class _RangeRadialGaugeState extends State<RangeRadialGauge>
         children: [
           widget.titlePosition == TitlePosition.top
               ? SizedBox(
-                  height: widget.strokeWidth - 10,
+                  height: widget.rangeStrokeWidth - 10,
                   child: widget.title,
                 )
               : const SizedBox(
@@ -176,7 +175,7 @@ class _RangeRadialGaugeState extends State<RangeRadialGauge>
                     ranges: widget.ranges,
                     actualValue: widget.actualValue,
                     decimalPlaces: widget.decimalPlaces,
-                    strokeWidth: widget.strokeWidth,
+                    strokeWidth: widget.rangeStrokeWidth,
                     actualValueTextStyle: widget.actualValueTextStyle,
                     maxDegree: widget.maxDegree,
                     startDegree: widget.startDegree,
@@ -186,7 +185,7 @@ class _RangeRadialGaugeState extends State<RangeRadialGauge>
           ),
           SizedBox(
             height: widget.titlePosition == TitlePosition.bottom
-                ? widget.strokeWidth - 10
+                ? widget.rangeStrokeWidth - 10
                 : 0,
           ),
           widget.titlePosition == TitlePosition.bottom
