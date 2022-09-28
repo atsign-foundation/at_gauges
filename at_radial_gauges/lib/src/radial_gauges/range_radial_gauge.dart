@@ -18,7 +18,7 @@ class RangeRadialGauge extends StatefulWidget {
     this.size = 200,
     this.title,
     this.titlePosition = TitlePosition.top,
-    this.pointerColor,
+    this.pointerColor = Colors.black,
     this.decimalPlaces = 0,
     this.isAnimate = true,
     this.animationDuration = kDefaultAnimationDuration,
@@ -59,7 +59,7 @@ class RangeRadialGauge extends StatefulWidget {
   final TitlePosition titlePosition;
 
   /// Sets the pointer color of the gauge.
-  final Color? pointerColor;
+  final Color pointerColor;
 
   /// Controls how much decimal places will be shown for the [minValue],[maxValue] and [actualValue].
   final int decimalPlaces;

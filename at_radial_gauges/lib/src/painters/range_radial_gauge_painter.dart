@@ -22,7 +22,7 @@ class RangeRadialGaugePainter extends CustomPainter {
     Key? key,
   });
   final double sweepAngle;
-  final Color? pointerColor;
+  final Color pointerColor;
   final String minValue;
   final String maxValue;
   final double actualValue;
@@ -121,7 +121,7 @@ class RangeRadialGaugePainter extends CustomPainter {
 
     // Arc Needle
     var needlePaint = Paint()
-      ..color = pointerColor ?? Colors.black
+      ..color = pointerColor
       ..strokeWidth = 5
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.fill;
