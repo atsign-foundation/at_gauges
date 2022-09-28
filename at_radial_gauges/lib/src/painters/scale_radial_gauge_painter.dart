@@ -26,10 +26,11 @@ class ScaleRadialGaugePainter extends CustomPainter {
   List<double> getScale(double divider) {
     List<double> scale = [];
     final double interval = maxValue / (divider - 1);
-    for (var i = 0; i < divider; i++) {
-      scale.add((i * interval).roundToDouble());
+    for (double i = 0; i < divider; i++) {
+      scale.add((i * interval));
     }
     scale.removeWhere((element) => element < minValue);
+
     return scale;
   }
 
@@ -73,18 +74,23 @@ class ScaleRadialGaugePainter extends CustomPainter {
     canvas.drawLine(center, needleEndPointOffset, needlePaint);
     canvas.drawCircle(center, 5, needlePaint);
 
+    final halfOfMaxValue = getScale(10).last / 2;
     // paint scale increments
     for (var value in getScale(10)) {
+      // print(value);
+      //get length of the value
+      var valueLength = value.toStringAsFixed(decimalPlaces).length;
       final TextPainter valueTextPainter = TextPainter(
         text: TextSpan(
           style: const TextStyle(
             color: Colors.black,
             fontSize: 10,
           ),
-          text: value.toStringAsFixed(0),
+          text: value.toStringAsFixed(decimalPlaces),
         ),
         textDirection: TextDirection.ltr,
       )..layout();
+
       // get sweep angle for every value
       var scaleSweepAngle = Utils.actualValueToSweepAngleRadian(
           actualValue: value,
@@ -92,19 +98,32 @@ class ScaleRadialGaugePainter extends CustomPainter {
           maxDegrees: 300,
           minValue: minValue);
       // apply sweep angle to arc angle formula
-      var scaleOffset = Offset(
-          (center.dx) +
-              (radius - scaleSweepAngle - 20) * cos(pi / 1.5 + scaleSweepAngle),
-          (center.dx) +
-              (radius - scaleSweepAngle - 15) *
-                  sin(pi / 1.5 + scaleSweepAngle));
+      if (value < halfOfMaxValue) {
+        var scaleOffset = Offset(
+            (center.dx) +
+                (radius - scaleSweepAngle - 15) *
+                    cos(pi / 1.5 + scaleSweepAngle),
+            (center.dx) +
+                (radius - scaleSweepAngle - 15) *
+                    sin(pi / 1.5 + scaleSweepAngle));
+        valueTextPainter.paint(canvas, scaleOffset);
+      } else {
+        var scaleOffset = Offset(
+            (center.dx) +
+                (radius - scaleSweepAngle - (20 + valueLength * 3)) *
+                    cos(pi / 1.5 + scaleSweepAngle),
+            (center.dx) +
+                (radius - scaleSweepAngle - 15) *
+                    sin(pi / 1.5 + scaleSweepAngle));
+        valueTextPainter.paint(canvas, scaleOffset);
+      }
+
       // adjust formula to be below arc
 
       // return offset of value
 
       // paint value to canvas
 
-      valueTextPainter.paint(canvas, scaleOffset);
       // Stroke Cap Circle
       var strokeCapCirclePaint = Paint()
         ..color = Colors.white

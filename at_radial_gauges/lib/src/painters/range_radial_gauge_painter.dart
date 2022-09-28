@@ -157,10 +157,7 @@ class RangeRadialGaugePainter extends CustomPainter {
               .toStringAsFixed(decimalPlaces),
         ),
         textDirection: TextDirection.ltr)
-      ..layout(
-        minWidth: size.width / 2,
-        maxWidth: size.width / 2,
-      );
+      ..layout();
 
     var actualValueOffset = Offset(size.width / 2.2, size.height / 1.8);
 

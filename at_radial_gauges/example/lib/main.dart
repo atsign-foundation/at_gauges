@@ -48,19 +48,20 @@ class MyGauges extends StatelessWidget {
               height: 350,
               child: ScaleRadialGauge(
                 maxValue: 100,
-                actualValue: 70,
+                actualValue: 50,
                 title: Text('Scale Radial Gauge'),
               ),
             ),
             SizedBox(
               height: 350,
               child: RangeRadialGauge(
+                minValue: 20,
                 maxValue: 75,
                 actualValue: 40,
                 maxDegree: 180,
                 startDegree: 180,
                 title: const Text('Range Radial Gauge'),
-                titlePosition: TitlePosition.top,
+                titlePosition: TitlePosition.bottom,
                 ranges: [
                   Range(
                     label: 'slow',
