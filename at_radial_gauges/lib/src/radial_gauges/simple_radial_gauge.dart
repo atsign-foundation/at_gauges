@@ -20,7 +20,7 @@ class SimpleRadialGauge extends StatefulWidget {
     this.pointerColor = Colors.blue,
     this.decimalPlaces = 0,
     this.isAnimate = true,
-    this.duration = kDefaultAnimationDuration,
+    this.animationDuration = kDefaultAnimationDuration,
     this.size = 200,
     Key? key,
   })  : assert(actualValue <= maxValue,
@@ -56,7 +56,7 @@ class SimpleRadialGauge extends StatefulWidget {
   final bool isAnimate;
 
   /// Sets a duration in milliseconds to control the speed of the animation.
-  final int duration;
+  final int animationDuration;
 
   /// Sets the height and width of the gauge.
   ///
@@ -91,7 +91,8 @@ class _SimpleRadialGaugeState extends State<SimpleRadialGauge>
 
     animationController = AnimationController(
       duration: Utils.getDuration(
-          isAnimate: widget.isAnimate, userMilliseconds: widget.duration),
+          isAnimate: widget.isAnimate,
+          userMilliseconds: widget.animationDuration),
       vsync: this,
       upperBound: upperBound,
     );
@@ -127,7 +128,8 @@ class _SimpleRadialGaugeState extends State<SimpleRadialGauge>
               actualValue: widget.actualValue,
               maxValue: widget.maxValue),
           duration: Utils.getDuration(
-              isAnimate: widget.isAnimate, userMilliseconds: widget.duration));
+              isAnimate: widget.isAnimate,
+              userMilliseconds: widget.animationDuration));
     }
 
     return FittedBox(

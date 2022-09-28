@@ -21,7 +21,7 @@ class RangeRadialGauge extends StatefulWidget {
     this.pointerColor,
     this.decimalPlaces = 0,
     this.isAnimate = true,
-    this.duration = kDefaultAnimationDuration,
+    this.animationDuration = kDefaultAnimationDuration,
     this.rangeStrokeWidth = 70,
     this.actualValueTextStyle,
     this.maxDegree = kDefaultRangeGaugeMaxDegree,
@@ -68,7 +68,7 @@ class RangeRadialGauge extends StatefulWidget {
   final bool isAnimate;
 
   /// Sets a duration in milliseconds to control the speed of the animation.
-  final int duration;
+  final int animationDuration;
 
   /// Sets the stroke width of the ranges.
   final double rangeStrokeWidth;
@@ -108,7 +108,8 @@ class _RangeRadialGaugeState extends State<RangeRadialGauge>
 
     animationController = AnimationController(
         duration: Utils.getDuration(
-            isAnimate: widget.isAnimate, userMilliseconds: widget.duration),
+            isAnimate: widget.isAnimate,
+            userMilliseconds: widget.animationDuration),
         vsync: this,
         upperBound: upperBound);
 
@@ -145,7 +146,8 @@ class _RangeRadialGaugeState extends State<RangeRadialGauge>
               maxValue: widget.maxValue,
               maxDegrees: widget.maxDegree),
           duration: Utils.getDuration(
-              isAnimate: widget.isAnimate, userMilliseconds: widget.duration));
+              isAnimate: widget.isAnimate,
+              userMilliseconds: widget.animationDuration));
     }
 
     return FittedBox(

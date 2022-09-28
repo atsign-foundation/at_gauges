@@ -38,7 +38,7 @@ class MyGauges extends StatelessWidget {
                 actualValue: 50,
                 maxValue: 100,
                 icon: Icon(Icons.water),
-                duration: 500,
+                animationDuration: 500,
                 title: Text(
                   'Simple Radial Gauge',
                 ),

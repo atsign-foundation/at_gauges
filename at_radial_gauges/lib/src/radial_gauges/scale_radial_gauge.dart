@@ -20,7 +20,7 @@ class ScaleRadialGauge extends StatefulWidget {
     this.needleColor = Colors.blue,
     this.decimalPlaces = 0,
     this.isAnimate = true,
-    this.duration = kDefaultAnimationDuration,
+    this.animationDuration = kDefaultAnimationDuration,
     Key? key,
   })  : assert(actualValue <= maxValue,
             'actualValue must be less than or equal to maxValue'),
@@ -62,7 +62,7 @@ class ScaleRadialGauge extends StatefulWidget {
   final bool isAnimate;
 
   /// Sets a duration in milliseconds to control the speed of the animation.
-  final int duration;
+  final int animationDuration;
 
   @override
   State<ScaleRadialGauge> createState() => _ScaleRadialGaugeState();
@@ -86,7 +86,8 @@ class _ScaleRadialGaugeState extends State<ScaleRadialGauge>
 
     animationController = AnimationController(
         duration: Utils.getDuration(
-            isAnimate: widget.isAnimate, userMilliseconds: widget.duration),
+            isAnimate: widget.isAnimate,
+            userMilliseconds: widget.animationDuration),
         vsync: this,
         upperBound: upperBound);
 
@@ -123,7 +124,8 @@ class _ScaleRadialGaugeState extends State<ScaleRadialGauge>
               minValue: widget.minValue,
               maxDegrees: 300),
           duration: Utils.getDuration(
-              isAnimate: widget.isAnimate, userMilliseconds: widget.duration));
+              isAnimate: widget.isAnimate,
+              userMilliseconds: widget.animationDuration));
     }
 
     return FittedBox(
