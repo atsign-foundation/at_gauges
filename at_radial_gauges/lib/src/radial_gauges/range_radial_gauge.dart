@@ -15,6 +15,7 @@ class RangeRadialGauge extends StatefulWidget {
     required this.maxValue,
     required this.actualValue,
     required this.ranges,
+    this.unit = const TextSpan(text: ''),
     this.size = 200,
     this.title,
     this.titlePosition = TitlePosition.top,
@@ -23,7 +24,9 @@ class RangeRadialGauge extends StatefulWidget {
     this.isAnimate = true,
     this.animationDuration = kDefaultAnimationDuration,
     this.rangeStrokeWidth = 70,
-    this.actualValueTextStyle,
+    this.actualValueTextStyle = const TextStyle(
+      color: Colors.black,
+    ),
     this.maxDegree = kDefaultRangeGaugeMaxDegree,
     this.startDegree = kDefaultRangeGaugeStartDegree,
     this.isLegend = false,
@@ -43,6 +46,8 @@ class RangeRadialGauge extends StatefulWidget {
 
   /// Sets the pointer value of the gauge.
   final double actualValue;
+
+  final TextSpan unit;
 
   /// Sets the ranges for the gauge.
   final List<Range> ranges;
@@ -74,7 +79,7 @@ class RangeRadialGauge extends StatefulWidget {
   final double rangeStrokeWidth;
 
   /// Sets the [TextStyle] for the actualValue.
-  final TextStyle? actualValueTextStyle;
+  final TextStyle actualValueTextStyle;
 
   /// Sets the [maxDegree] for the gauge.
   final double maxDegree;
@@ -181,7 +186,8 @@ class _RangeRadialGaugeState extends State<RangeRadialGauge>
                     actualValueTextStyle: widget.actualValueTextStyle,
                     maxDegree: widget.maxDegree,
                     startDegree: widget.startDegree,
-                    isLegend: widget.isLegend),
+                    isLegend: widget.isLegend,
+                    unit: widget.unit),
               ),
             ),
           ),

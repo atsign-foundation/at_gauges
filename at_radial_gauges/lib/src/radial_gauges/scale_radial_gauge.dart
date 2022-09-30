@@ -21,6 +21,7 @@ class ScaleRadialGauge extends StatefulWidget {
     this.decimalPlaces = 0,
     this.isAnimate = true,
     this.animationDuration = kDefaultAnimationDuration,
+    this.unit = const TextSpan(text: ''),
     Key? key,
   })  : assert(actualValue <= maxValue,
             'actualValue must be less than or equal to maxValue'),
@@ -37,6 +38,8 @@ class ScaleRadialGauge extends StatefulWidget {
 
   /// Sets the actual value of the gauge.
   final double actualValue;
+
+  final TextSpan unit;
 
   /// Sets the width and height of the gauge.
   ///
@@ -154,6 +157,7 @@ class _ScaleRadialGaugeState extends State<ScaleRadialGauge>
                     maxValue: widget.maxValue,
                     actualValue: widget.actualValue,
                     decimalPlaces: widget.decimalPlaces,
+                    unit: widget.unit,
                   ),
                 ),
               ),

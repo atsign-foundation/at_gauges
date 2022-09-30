@@ -13,6 +13,7 @@ class ScaleRadialGaugePainter extends CustomPainter {
     required this.actualValue,
     required this.needleColor,
     required this.decimalPlaces,
+    required this.unit,
     Key? key,
   });
   final double sweepAngle;
@@ -22,6 +23,7 @@ class ScaleRadialGaugePainter extends CustomPainter {
   final double actualValue;
   final Color needleColor;
   final int decimalPlaces;
+  final TextSpan unit;
 
   List<double> getScale(double divider) {
     List<double> scale = [];
@@ -143,6 +145,7 @@ class ScaleRadialGaugePainter extends CustomPainter {
     final TextPainter actualValueTextPainter = TextPainter(
         text: TextSpan(
           style: const TextStyle(color: Colors.black),
+          children: [TextSpan(text: ' '), unit],
           text: Utils.sweepAngleRadianToActualValue(
                   sweepAngle: sweepAngle,
                   maxValue: maxValue,

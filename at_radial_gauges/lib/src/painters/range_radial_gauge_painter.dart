@@ -18,7 +18,8 @@ class RangeRadialGaugePainter extends CustomPainter {
     required this.startDegree,
     required this.isLegend,
     required this.strokeWidth,
-    this.actualValueTextStyle,
+    required this.actualValueTextStyle,
+    required this.unit,
     Key? key,
   });
   final double sweepAngle;
@@ -26,6 +27,7 @@ class RangeRadialGaugePainter extends CustomPainter {
   final String minValue;
   final String maxValue;
   final double actualValue;
+  final TextSpan unit;
   final int decimalPlaces;
 
   /// Sets the ranges for the gauge.
@@ -35,7 +37,7 @@ class RangeRadialGaugePainter extends CustomPainter {
   final double strokeWidth;
 
   /// Sets the [TextStyle] for the actualValue.
-  final TextStyle? actualValueTextStyle;
+  final TextStyle actualValueTextStyle;
 
   /// Sets the [maxDegree] of the gauge
   final double maxDegree;
@@ -145,10 +147,8 @@ class RangeRadialGaugePainter extends CustomPainter {
 
     final TextPainter valueTextPainter = TextPainter(
         text: TextSpan(
-          style: actualValueTextStyle ??
-              const TextStyle(
-                color: Colors.black,
-              ),
+          style: actualValueTextStyle,
+          children: [TextSpan(text: ' '), unit],
           text: Utils.sweepAngleRadianToActualValue(
                   sweepAngle: sweepAngle,
                   maxValue: double.parse(maxValue),

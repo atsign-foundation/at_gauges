@@ -38,10 +38,10 @@ class MyGauges extends StatelessWidget {
                 actualValue: 50,
                 maxValue: 100,
                 icon: Icon(Icons.water),
+                unit: 'L',
                 animationDuration: 500,
-                title: Text(
-                  'Simple Radial Gauge',
-                ),
+                title: Text('Simple Radial Gauge'),
+                titlePosition: TitlePosition.top,
               ),
             ),
             const SizedBox(
@@ -49,19 +49,22 @@ class MyGauges extends StatelessWidget {
               child: ScaleRadialGauge(
                 maxValue: 100,
                 actualValue: 50,
+                unit: TextSpan(text: 'Km/hr', style: TextStyle(fontSize: 9)),
                 title: Text('Scale Radial Gauge'),
+                titlePosition: TitlePosition.top,
               ),
             ),
             SizedBox(
               height: 350,
               child: RangeRadialGauge(
-                minValue: 20,
-                maxValue: 75,
-                actualValue: 40,
+                minValue: 0,
+                maxValue: 100,
+                actualValue: 50,
                 maxDegree: 180,
                 startDegree: 180,
                 title: const Text('Range Radial Gauge'),
                 titlePosition: TitlePosition.bottom,
+                unit: const TextSpan(text: '°C'),
                 ranges: [
                   Range(
                     label: 'slow',
@@ -78,7 +81,7 @@ class MyGauges extends StatelessWidget {
                   Range(
                     label: 'fast',
                     lowerLimit: 70,
-                    upperLimit: 75,
+                    upperLimit: 100,
                     backgroundColor: Colors.red,
                   ),
                 ],
