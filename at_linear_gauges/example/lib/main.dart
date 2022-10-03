@@ -40,7 +40,9 @@ class _MyHomePageState extends State<MyHomePage> {
           body: SizedBox(
         child: Center(
           child: SimpleLinearGauge(
-            divisions: 10,
+            minValue: 0,
+            maxValue: 100,
+            actualValue: 50,
           ),
         ),
       )),
