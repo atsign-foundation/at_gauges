@@ -40,9 +40,16 @@ class _MyHomePageState extends State<MyHomePage> {
           body: SizedBox(
         child: Center(
           child: SimpleLinearGauge(
+            title: const Text('Simple Linear Gauge'),
+            titlePosition: TitlePosition.top,
+            gaugeOrientation: GaugeOrientation.vertical,
             minValue: 0,
             maxValue: 100,
-            actualValue: 50,
+            actualValue: 60,
+            pointerIcon: const Icon(
+              Icons.arrow_right,
+              // size: 70,
+            ),
           ),
         ),
       )),

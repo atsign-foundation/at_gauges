@@ -7,12 +7,14 @@ abstract class LinearCustomPainter extends CustomPainter {
     required this.minValue,
     required this.maxValue,
     required this.actualValue,
+    required this.decimalPlaces,
     required this.ranges,
     required this.divisions,
     required this.title,
     required this.titlePosition,
+    required this.gaugeOrientation,
+    required this.pointerColor,
     required this.pointerIcon,
-    required this.decimalPlaces,
     required this.gaugeStrokeWidth,
     required this.rangeStrokeWidth,
     required this.majorTickStrokeWidth,
@@ -42,8 +44,11 @@ abstract class LinearCustomPainter extends CustomPainter {
   /// Sets the position of the title.
   final TitlePosition titlePosition;
 
+  /// Sets the color of the pointer
+  final Color pointerColor;
+
   /// Sets the pointer icon of the gauge.
-  final Icon pointerIcon;
+  Icon pointerIcon;
 
   /// Controls how much decimal places will be shown for the [minValue],[maxValue] and [actualValue].
   final int decimalPlaces;
@@ -66,11 +71,30 @@ abstract class LinearCustomPainter extends CustomPainter {
   /// Sets the [TextStyle] for the mjorTicksValue.
   final TextStyle majorTicksValueTextStyle;
 
+  /// Orient the gauge vertically or horizontally.
+  final GaugeOrientation gaugeOrientation;
+
   ///find scale lowest value
-  double getScaleLowerLimit(Size size) => size.height / kLowerScaleLimit;
+  double getScaleLowerLimit(Size size) {
+    switch (gaugeOrientation) {
+      case GaugeOrientation.horizontal:
+        return size.width / kLowerScaleLimitHorizontal;
+
+      case GaugeOrientation.vertical:
+        return size.height / kLowerScaleLimitVertical;
+    }
+  }
 
   ///find scale highest value
-  double getScaleUpperLimit(Size size) => size.height / kUpperScaleLimit;
+  double getScaleUpperLimit(Size size) {
+    switch (gaugeOrientation) {
+      case GaugeOrientation.horizontal:
+        return size.width / kUpperScaleLimitHorizontal;
+
+      case GaugeOrientation.vertical:
+        return size.height / kUpperScaleLimitVertical;
+    }
+  }
 
   /// find the length of the scale
   double getScaleLength(Size size) =>
@@ -99,10 +123,7 @@ abstract class LinearCustomPainter extends CustomPainter {
     canvas.drawLine(startPoint, endPoint, gaugeScalePainter);
   }
 
-  void drawMajorTickMarks({
-    required Canvas canvas,
-    required Size size,
-  }) {
+  void drawMajorTickMarks({required Canvas canvas, required Size size}) {
     final interval = getScaleInterval(size);
 
     var majorTickMarkPosition = getScaleLowerLimit(size);
@@ -124,10 +145,7 @@ abstract class LinearCustomPainter extends CustomPainter {
     }
   }
 
-  void drawMinorTickMarks({
-    required Canvas canvas,
-    required Size size,
-  }) {
+  void drawMinorTickMarks({required Canvas canvas, required Size size}) {
     /// the total length of the scale
     final scaleLength = getScaleLength(size);
 
@@ -138,7 +156,15 @@ abstract class LinearCustomPainter extends CustomPainter {
     /// finds the distance needed between each [MinorDivisions]
     final interval = scaleLength / minorDivisions;
 
-    var minorTickMarkPosition = size.height / kLowerScaleLimit;
+    double minorTickMarkPosition = 0;
+    switch (gaugeOrientation) {
+      case GaugeOrientation.horizontal:
+        minorTickMarkPosition = size.width / kLowerScaleLimitHorizontal;
+        break;
+      case GaugeOrientation.vertical:
+        minorTickMarkPosition = size.height / kLowerScaleLimitVertical;
+        break;
+    }
 
     for (var i = 0; i < (minorDivisions + 1); i++) {
       final Offset minorTickMarksEndPoint =
@@ -157,10 +183,7 @@ abstract class LinearCustomPainter extends CustomPainter {
     }
   }
 
-  void drawMajorTicksValue({
-    required Canvas canvas,
-    required Size size,
-  }) {
+  void drawMajorTicksValue({required Canvas canvas, required Size size}) {
     /// find the interval of max value
     final valueInterval = (maxValue - minValue) / divisions;
 
@@ -186,43 +209,142 @@ abstract class LinearCustomPainter extends CustomPainter {
       /// Find the position of the ticks
       final Offset majorTickValuePosition =
           Offset(size.width / 1.7, majorTickMarkPosition);
+      final pivot = majorTickValuePainter.size.center(majorTickValuePosition);
+      if (gaugeOrientation == GaugeOrientation.horizontal) {
+        canvas.save();
+        canvas.translate(pivot.dx, pivot.dy);
+        canvas.rotate(Helper.degreesToRadians(-90));
+        canvas.translate(-pivot.dx, -pivot.dy);
+        majorTickValuePainter.paint(canvas, majorTickValuePosition);
+        canvas.restore();
+      } else {
+        majorTickValuePainter.paint(canvas, majorTickValuePosition);
+      }
 
-      majorTickValuePainter.paint(canvas, majorTickValuePosition);
       majorTickMarkPosition = majorTickMarkPosition + ticksInterval;
       // }
     }
   }
 
   /// Draws the main scale of the Gauge
-  void drawGaugePointer(Canvas canvas, Size size, Color color) {
-    final Offset upperLimitDisplay =
-        Offset(size.width / 2, getActualValuePosition(size));
+  void drawGaugePointer(Canvas canvas, Size size) {
+    final halfMajorStrokeWidth = majorTickStrokeWidth / 2;
+    final Offset upperLimitDisplay = Offset(
+        size.width / 2, getActualValuePosition(size) - halfMajorStrokeWidth);
     final Offset lowerLimitDisplay =
-        Offset(size.width / 2, getScaleLowerLimit(size));
+        Offset(size.width / 2, getScaleLowerLimit(size) + halfMajorStrokeWidth);
     final gaugeScalePainter = Paint()
-      ..color = color
+      ..color = pointerColor
       ..strokeWidth = gaugeStrokeWidth;
 
     canvas.drawLine(lowerLimitDisplay, upperLimitDisplay, gaugeScalePainter);
   }
 
+  /// Draws the gauge pointer icon
+  void drawPointerIcon(Canvas canvas, Size size) {
+    final pointerIconPainter = TextPainter(
+      textScaleFactor: 2,
+      text: TextSpan(
+        text: String.fromCharCode(pointerIcon.icon!.codePoint),
+        style: TextStyle(
+          color: pointerColor,
+          fontSize: pointerIcon.size,
+          fontFamily: pointerIcon.icon!.fontFamily,
+          package: pointerIcon.icon!.fontPackage,
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout();
+
+    final Offset pointerIconPosition = Offset((size.width / 2.5),
+        getActualValuePosition(size) - (pointerIconPainter.width / 2));
+    if (gaugeOrientation == GaugeOrientation.horizontal) {
+      final pivot = pointerIconPainter.size.center(pointerIconPosition);
+      canvas.save();
+      canvas.translate(pivot.dx, pivot.dy);
+      canvas.rotate(Helper.degreesToRadians(-90));
+      canvas.translate(-pivot.dx, -pivot.dy);
+      pointerIconPainter.paint(canvas, pointerIconPosition);
+      canvas.restore();
+    } else {
+      pointerIconPainter.paint(canvas, pointerIconPosition);
+    }
+  }
+
+  void drawTitle(Canvas canvas, Size size) {
+    final titlePainter = TextPainter(
+      textAlign: TextAlign.center,
+      text: TextSpan(
+          text: 'Simple Linear Gauge',
+          style: TextStyle(
+            color: Colors.black,
+          )),
+      textDirection: TextDirection.ltr,
+    )..layout();
+
+    Offset titlePositionOffset;
+    switch (gaugeOrientation) {
+      case GaugeOrientation.horizontal:
+        if (titlePosition == TitlePosition.top) {
+          titlePositionOffset = Offset((size.width / 6), size.height / 2);
+        } else {
+          titlePositionOffset = Offset((size.width / 1.8), size.height / 2);
+        }
+        final pivot = titlePainter.size.center(titlePositionOffset);
+        canvas.save();
+        canvas.translate(pivot.dx, pivot.dy);
+        canvas.rotate(Helper.degreesToRadians(-90));
+        canvas.translate(-pivot.dx, -pivot.dy);
+        titlePainter.paint(canvas, titlePositionOffset);
+        canvas.restore();
+
+        break;
+      case GaugeOrientation.vertical:
+        final halfTextWidth = titlePainter.width / 2;
+        double titleHeight;
+        if (titlePosition.name == 'top') {
+          titleHeight = getScaleUpperLimit(size) - 50;
+
+          /// Subtract this value from half width of canvas to center title.
+          final titlePositionOffset =
+              Offset(((size.width / 2) - halfTextWidth), titleHeight);
+          titlePainter.paint(canvas, titlePositionOffset);
+        } else if (titlePosition.name == 'bottom') {
+          titleHeight = getScaleLowerLimit(size) + 50;
+          final titlePositionOffset =
+              Offset(((size.width / 2) - halfTextWidth), titleHeight);
+          titlePainter.paint(canvas, titlePositionOffset);
+        }
+        break;
+    }
+  }
+
+  void startRotation(Canvas canvas, Size size) {
+    switch (gaugeOrientation) {
+      case GaugeOrientation.horizontal:
+        canvas.save();
+        canvas.translate(size.width / 2, size.height / 2);
+        canvas.rotate(Helper.degreesToRadians(90));
+        canvas.translate(-size.width / 2, -size.height / 2);
+        break;
+
+      case GaugeOrientation.vertical:
+        break;
+    }
+  }
+
   @override
   void paint(Canvas canvas, Size size) {
+    startRotation(canvas, size);
     drawGaugeScale(canvas, size);
-    drawMajorTickMarks(
-      canvas: canvas,
-      size: size,
-    );
-    drawMinorTickMarks(
-      canvas: canvas,
-      size: size,
-    );
-    drawMajorTicksValue(
-      canvas: canvas,
-      size: size,
-    );
+    drawMajorTicksValue(canvas: canvas, size: size);
+    drawMajorTickMarks(canvas: canvas, size: size);
+    drawMinorTickMarks(canvas: canvas, size: size);
 
-    drawGaugePointer(canvas, size, Colors.red);
+    drawGaugePointer(canvas, size);
+    drawPointerIcon(canvas, size);
+    drawTitle(canvas, size);
+    canvas.restore();
   }
 }
 
@@ -236,7 +358,9 @@ abstract class LinearCustomGauge extends StatefulWidget {
     required this.size,
     required this.title,
     required this.titlePosition,
+    required this.pointerColor,
     required this.pointerIcon,
+    required this.gaugeOrientation,
     required this.decimalPlaces,
     required this.isAnimate,
     required this.milliseconds,
@@ -274,8 +398,15 @@ abstract class LinearCustomGauge extends StatefulWidget {
   /// Sets the position of the title.
   final TitlePosition titlePosition;
 
+  /// Sets the color of the pointer.
+  final Color pointerColor;
+
   /// Sets the pointer icon of the gauge.
   final Icon pointerIcon;
+
+  /// Orients the Gauge vertically or horizontally.
+  /// Consider reducing the [majorTickStrokeWidth] and the [majorTickStrokeWidth] to 2.
+  final GaugeOrientation gaugeOrientation;
 
   /// Controls how much decimal places will be shown for the [minValue],[maxValue] and [actualValue].
   final int decimalPlaces;

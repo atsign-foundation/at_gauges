@@ -10,6 +10,8 @@ class SimpleLinearGaugePainter extends LinearCustomPainter {
     required int divisions,
     required Text title,
     required TitlePosition titlePosition,
+    required GaugeOrientation gaugeOrientation,
+    required Color pointerColor,
     required Icon pointerIcon,
     required int decimalPlaces,
     required double rangeStrokeWidth,
@@ -26,6 +28,7 @@ class SimpleLinearGaugePainter extends LinearCustomPainter {
           divisions: divisions,
           title: title,
           titlePosition: titlePosition,
+          pointerColor: pointerColor,
           pointerIcon: pointerIcon,
           decimalPlaces: decimalPlaces,
           gaugeStrokeWidth: gaugeStrokeWidth,
@@ -34,6 +37,7 @@ class SimpleLinearGaugePainter extends LinearCustomPainter {
           minorTickStrokeWidth: minorTickStrokeWidth,
           actualValueTextStyle: actualValueTextStyle,
           majorTicksValueTextStyle: majorTicksValueTextStyle,
+          gaugeOrientation: gaugeOrientation,
         );
 
   @override

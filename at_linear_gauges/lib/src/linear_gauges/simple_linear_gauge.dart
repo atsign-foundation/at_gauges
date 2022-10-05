@@ -12,13 +12,15 @@ class SimpleLinearGauge extends LinearCustomGauge {
     double size = 200,
     Text title = const Text(''),
     TitlePosition titlePosition = TitlePosition.top,
-    Icon pointerIcon = const Icon(Icons.arrow_left_outlined),
+    Color pointerColor = Colors.blue,
+    Icon pointerIcon = const Icon(Icons.arrow_right_sharp, color: Colors.black),
+    GaugeOrientation gaugeOrientation = GaugeOrientation.vertical,
     int decimalPlaces = 0,
     bool isAnimate = true,
     int milliseconds = kDefaultAnimationDuration,
     double gaugeStrokeWidth = 5.0,
     double rangeStrokeWidth = 20,
-    double majorTickStrokeWidth = 5.0,
+    double majorTickStrokeWidth = 5,
     double minorTickStrokeWidth = 5.0,
     TextStyle actualValueTextStyle = const TextStyle(color: Colors.black),
     TextStyle majorTickValueTextStyle = const TextStyle(color: Colors.black),
@@ -31,6 +33,7 @@ class SimpleLinearGauge extends LinearCustomGauge {
           size: size,
           title: title,
           titlePosition: titlePosition,
+          pointerColor: pointerColor,
           pointerIcon: pointerIcon,
           decimalPlaces: decimalPlaces,
           isAnimate: isAnimate,
@@ -41,15 +44,50 @@ class SimpleLinearGauge extends LinearCustomGauge {
           minorTickStrokeWidth: minorTickStrokeWidth,
           actualValueTextStyle: actualValueTextStyle,
           majorTicksValueTextStyle: majorTickValueTextStyle,
+          gaugeOrientation: gaugeOrientation,
         );
 
   @override
   State<SimpleLinearGauge> createState() => _SimpleLinearGaugeState();
 }
 
-class _SimpleLinearGaugeState extends State<SimpleLinearGauge> {
+class _SimpleLinearGaugeState extends State<SimpleLinearGauge>
+    with SingleTickerProviderStateMixin {
+  late Animation<double> animation;
+  late AnimationController animationController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    animationController = AnimationController(
+        duration: Helper.getDuration(
+            isAnimate: widget.isAnimate, userMilliseconds: widget.milliseconds),
+        vsync: this,
+        upperBound: widget.maxValue);
+
+    animation = Tween<double>().animate(animationController)
+      ..addListener(() {
+        if (animationController.value == widget.actualValue) {
+          animationController.stop();
+        }
+        setState(() {});
+      });
+
+    animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (animationController.value != widget.actualValue) {
+      animationController.animateTo(widget.actualValue);
+    }
     return FittedBox(
       child: SizedBox(
         width: MediaQuery.of(context).size.width,
@@ -58,11 +96,12 @@ class _SimpleLinearGaugeState extends State<SimpleLinearGauge> {
           painter: SimpleLinearGaugePainter(
             maxValue: widget.maxValue,
             minValue: widget.minValue,
-            actualValue: widget.actualValue,
+            actualValue: animationController.value,
             ranges: widget.ranges,
             divisions: widget.divisions,
             title: widget.title,
             titlePosition: widget.titlePosition,
+            pointerColor: widget.pointerColor,
             pointerIcon: widget.pointerIcon,
             decimalPlaces: widget.decimalPlaces,
             rangeStrokeWidth: widget.rangeStrokeWidth,
@@ -71,6 +110,7 @@ class _SimpleLinearGaugeState extends State<SimpleLinearGauge> {
             minorTickStrokeWidth: widget.minorTickStrokeWidth,
             actualValueTextStyle: widget.actualValueTextStyle,
             majorTicksValueTextStyle: widget.majorTicksValueTextStyle,
+            gaugeOrientation: widget.gaugeOrientation,
           ),
         ),
       ),
