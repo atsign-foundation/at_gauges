@@ -51,7 +51,7 @@ class MyGauges extends StatelessWidget {
                 actualValue: 50,
                 unit: TextSpan(text: 'Km/hr', style: TextStyle(fontSize: 9)),
                 title: Text('Scale Radial Gauge'),
-                titlePosition: TitlePosition.top,
+                titlePosition: TitlePosition.bottom,
               ),
             ),
             SizedBox(
@@ -87,6 +87,7 @@ class MyGauges extends StatelessWidget {
                 ],
               ),
             ),
+            const Text('Hi'),
           ],
         ),
       ),

@@ -145,7 +145,7 @@ class ScaleRadialGaugePainter extends CustomPainter {
     final TextPainter actualValueTextPainter = TextPainter(
         text: TextSpan(
           style: const TextStyle(color: Colors.black),
-          children: [TextSpan(text: ' '), unit],
+          children: [TextSpan(text: unit.text == '' ? '' : ' '), unit],
           text: Utils.sweepAngleRadianToActualValue(
                   sweepAngle: sweepAngle,
                   maxValue: maxValue,
@@ -154,12 +154,10 @@ class ScaleRadialGaugePainter extends CustomPainter {
               .toStringAsFixed(decimalPlaces),
         ),
         textDirection: TextDirection.ltr)
-      ..layout(
-        minWidth: size.width / 2,
-        maxWidth: size.width / 2,
-      );
+      ..layout();
 
-    final actualValueOffset = Offset(size.width / 2.2, size.height / 1.6);
+    final actualValueOffset = Offset(
+        size.width / 2 - (actualValueTextPainter.width / 2), size.height / 1.6);
 
     actualValueTextPainter.paint(canvas, actualValueOffset);
   }

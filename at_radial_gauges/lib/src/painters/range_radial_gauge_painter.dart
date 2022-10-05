@@ -77,6 +77,7 @@ class RangeRadialGaugePainter extends CustomPainter {
           actualValue: range.upperLimit - range.lowerLimit,
           maxValue: double.parse(maxValue),
           maxDegrees: maxDegree);
+
       canvas.drawArc(
           arcRect, rangeStartAngle, rangeSweepAngle, false, rangeArcPaint);
 
@@ -91,10 +92,7 @@ class RangeRadialGaugePainter extends CustomPainter {
               text: range.label,
             ),
             textDirection: TextDirection.ltr)
-          ..layout(
-            minWidth: size.width / 2,
-            maxWidth: size.width / 2,
-          );
+          ..layout();
 
         final rangeLabelOffset = Offset(size.width / 0.7, labelHeight);
         rangeLabelTextPainter.paint(canvas, rangeLabelOffset);
@@ -148,7 +146,7 @@ class RangeRadialGaugePainter extends CustomPainter {
     final TextPainter valueTextPainter = TextPainter(
         text: TextSpan(
           style: actualValueTextStyle,
-          children: [TextSpan(text: ' '), unit],
+          children: [TextSpan(text: unit.text == '' ? '' : ' '), unit],
           text: Utils.sweepAngleRadianToActualValue(
                   sweepAngle: sweepAngle,
                   maxValue: double.parse(maxValue),
@@ -159,7 +157,8 @@ class RangeRadialGaugePainter extends CustomPainter {
         textDirection: TextDirection.ltr)
       ..layout();
 
-    var actualValueOffset = Offset(size.width / 2.2, size.height / 1.8);
+    var actualValueOffset =
+        Offset(size.width / 2 - valueTextPainter.width / 2, size.height / 1.8);
 
     // paint value to canvas
     valueTextPainter.paint(canvas, actualValueOffset);
