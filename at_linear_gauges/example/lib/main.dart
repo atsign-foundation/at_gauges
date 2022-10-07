@@ -40,16 +40,28 @@ class _MyHomePageState extends State<MyHomePage> {
           body: SizedBox(
         child: Center(
           child: SimpleLinearGauge(
+            maxValue: 100,
+            actualValue: 76,
+            //Optional Parameters
+            minValue: 0,
+            divisions: 10,
+            size: double.infinity,
             title: const Text('Simple Linear Gauge'),
             titlePosition: TitlePosition.top,
+            pointerColor: Colors.blue,
+            pointerIcon: const Icon(Icons.arrow_right),
             gaugeOrientation: GaugeOrientation.vertical,
-            minValue: 0,
-            maxValue: 100,
-            actualValue: 60,
-            pointerIcon: const Icon(
-              Icons.arrow_right,
-              // size: 70,
+            decimalPlaces: 0,
+            isAnimate: true,
+            animationDuration: 2000,
+            gaugeStrokeWidth: 5,
+            rangeStrokeWidth: 5,
+            majorTickStrokeWidth: 5,
+            minorTickStrokeWidth: 5,
+            actualValueTextStyle: const TextStyle(
+              color: Colors.black,
             ),
+            majorTickValueTextStyle: const TextStyle(color: Colors.black),
           ),
         ),
       )),

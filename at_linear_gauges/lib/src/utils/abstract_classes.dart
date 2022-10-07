@@ -130,10 +130,10 @@ abstract class LinearCustomPainter extends CustomPainter {
 
     for (var i = 0; i < (divisions + 1); i++) {
       final Offset majorTickMarksEndPoint =
-          Offset(size.width / 1.8, majorTickMarkPosition);
+          Offset((size.width / 1.8) + gaugeStrokeWidth, majorTickMarkPosition);
 
-      final Offset majorTickMarksStartPoint =
-          Offset(size.width / 2.02, majorTickMarkPosition);
+      final Offset majorTickMarksStartPoint = Offset(
+          (size.width / 2.0) - gaugeStrokeWidth / 2, majorTickMarkPosition);
 
       final majorTickMarksPainter = Paint()
         ..color = Colors.grey.shade300
@@ -168,7 +168,7 @@ abstract class LinearCustomPainter extends CustomPainter {
 
     for (var i = 0; i < (minorDivisions + 1); i++) {
       final Offset minorTickMarksEndPoint =
-          Offset(size.width / 1.9, minorTickMarkPosition);
+          Offset((size.width / 1.9) + gaugeStrokeWidth, minorTickMarkPosition);
 
       final Offset minorTickMarksStartPoint =
           Offset(size.width / 2, minorTickMarkPosition);
@@ -198,7 +198,7 @@ abstract class LinearCustomPainter extends CustomPainter {
       // if (value > minValue) {
       var stringValue = value.toStringAsFixed(decimalPlaces);
 
-      // sets the paint properites of the tick value.
+      // sets the paint properties of the tick value.
       final majorTickValuePainter = TextPainter(
         textAlign: TextAlign.center,
         text: TextSpan(
@@ -208,7 +208,7 @@ abstract class LinearCustomPainter extends CustomPainter {
 
       /// Find the position of the ticks
       final Offset majorTickValuePosition =
-          Offset(size.width / 1.7, majorTickMarkPosition);
+          Offset((size.width / 1.7) + gaugeStrokeWidth, majorTickMarkPosition);
       final pivot = majorTickValuePainter.size.center(majorTickValuePosition);
       if (gaugeOrientation == GaugeOrientation.horizontal) {
         canvas.save();
@@ -235,7 +235,7 @@ abstract class LinearCustomPainter extends CustomPainter {
         Offset(size.width / 2, getScaleLowerLimit(size) + halfMajorStrokeWidth);
     final gaugeScalePainter = Paint()
       ..color = pointerColor
-      ..strokeWidth = gaugeStrokeWidth;
+      ..strokeWidth = rangeStrokeWidth;
 
     canvas.drawLine(lowerLimitDisplay, upperLimitDisplay, gaugeScalePainter);
   }
@@ -271,14 +271,39 @@ abstract class LinearCustomPainter extends CustomPainter {
     }
   }
 
+  /// Draws the gauge actual value
+  void drawActualValue(Canvas canvas, Size size) {
+    final actualValuePainter = TextPainter(
+      text: TextSpan(
+        text: actualValue.toStringAsFixed(decimalPlaces),
+        style: actualValueTextStyle,
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout();
+
+    final Offset pointerIconPosition = Offset((size.width / 2.8),
+        getActualValuePosition(size) - (actualValuePainter.width / 2));
+    if (gaugeOrientation == GaugeOrientation.horizontal) {
+      final pivot = actualValuePainter.size.center(pointerIconPosition);
+      canvas.save();
+      canvas.translate(pivot.dx, pivot.dy);
+      canvas.rotate(Helper.degreesToRadians(-90));
+      canvas.translate(-pivot.dx, -pivot.dy);
+      actualValuePainter.paint(canvas, pointerIconPosition);
+      canvas.restore();
+    } else {
+      actualValuePainter.paint(canvas, pointerIconPosition);
+    }
+  }
+
   void drawTitle(Canvas canvas, Size size) {
     final titlePainter = TextPainter(
       textAlign: TextAlign.center,
       text: TextSpan(
-          text: 'Simple Linear Gauge',
-          style: TextStyle(
-            color: Colors.black,
-          )),
+          text: title.data,
+          style: title.style == null
+              ? TextStyle(color: Colors.black)
+              : title.style),
       textDirection: TextDirection.ltr,
     )..layout();
 
@@ -326,6 +351,18 @@ abstract class LinearCustomPainter extends CustomPainter {
         canvas.translate(size.width / 2, size.height / 2);
         canvas.rotate(Helper.degreesToRadians(90));
         canvas.translate(-size.width / 2, -size.height / 2);
+
+        break;
+
+      case GaugeOrientation.vertical:
+        break;
+    }
+  }
+
+  void endRotation(Canvas canvas) {
+    switch (gaugeOrientation) {
+      case GaugeOrientation.horizontal:
+        canvas.restore();
         break;
 
       case GaugeOrientation.vertical:
@@ -343,8 +380,9 @@ abstract class LinearCustomPainter extends CustomPainter {
 
     drawGaugePointer(canvas, size);
     drawPointerIcon(canvas, size);
+    drawActualValue(canvas, size);
     drawTitle(canvas, size);
-    canvas.restore();
+    endRotation(canvas);
   }
 }
 
