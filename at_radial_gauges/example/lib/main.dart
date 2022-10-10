@@ -31,63 +31,37 @@ class MyGauges extends StatelessWidget {
       // appBar: AppBar(title: const Text('Radial Gauges')),
       body: SafeArea(
         child: ListView(
-          children: [
-            const SizedBox(
-              height: 350,
-              child: SimpleRadialGauge(
-                actualValue: 50,
-                maxValue: 100,
-                icon: Icon(Icons.water),
-                unit: 'L',
-                animationDuration: 500,
-                title: Text('Simple Radial Gauge'),
-                titlePosition: TitlePosition.top,
-              ),
+          children: const [
+            SimpleRadialGauge(
+              actualValue: 50,
+              maxValue: 100,
+              // Optional Parameters
+              minValue: 0,
+              title: Text('Simple Radial Gauge'),
+              titlePosition: TitlePosition.top,
+              unit: 'L',
+              icon: Icon(Icons.water),
+              pointerColor: Colors.blue,
+              decimalPlaces: 0,
+              isAnimate: true,
+              animationDuration: 2000,
+              size: 400,
             ),
-            const SizedBox(
-              height: 350,
-              child: ScaleRadialGauge(
-                maxValue: 100,
-                actualValue: 50,
-                unit: TextSpan(text: 'Km/hr', style: TextStyle(fontSize: 9)),
-                title: Text('Scale Radial Gauge'),
-                titlePosition: TitlePosition.bottom,
-              ),
+            ScaleRadialGauge(
+              maxValue: 100,
+              actualValue: 50,
+              // Optional Parameters
+              minValue: 0,
+              size: 400,
+              title: Text('Scale Radial Gauge'),
+              titlePosition: TitlePosition.top,
+              pointerColor: Colors.blue,
+              needleColor: Colors.blue,
+              decimalPlaces: 0,
+              isAnimate: true,
+              animationDuration: 2000,
+              unit: TextSpan(text: 'Km/h', style: TextStyle(fontSize: 10)),
             ),
-            SizedBox(
-              height: 350,
-              child: RangeRadialGauge(
-                minValue: 0,
-                maxValue: 100,
-                actualValue: 50,
-                maxDegree: 180,
-                startDegree: 180,
-                title: const Text('Range Radial Gauge'),
-                titlePosition: TitlePosition.bottom,
-                unit: const TextSpan(text: '°C'),
-                ranges: [
-                  Range(
-                    label: 'slow',
-                    lowerLimit: 0,
-                    upperLimit: 50,
-                    backgroundColor: Colors.green,
-                  ),
-                  Range(
-                    label: 'medium',
-                    lowerLimit: 50,
-                    upperLimit: 70,
-                    backgroundColor: Colors.orange,
-                  ),
-                  Range(
-                    label: 'fast',
-                    lowerLimit: 70,
-                    upperLimit: 100,
-                    backgroundColor: Colors.red,
-                  ),
-                ],
-              ),
-            ),
-            const Text('Hi'),
           ],
         ),
       ),

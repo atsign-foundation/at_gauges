@@ -10,9 +10,9 @@ class ScaleRadialGauge extends StatefulWidget {
   ///
   /// The [minValue] and [maxValue] must not be null.
   const ScaleRadialGauge({
-    this.minValue = 0,
     required this.maxValue,
     required this.actualValue,
+    this.minValue = 0,
     this.size = 200,
     this.title,
     this.titlePosition = TitlePosition.top,
@@ -131,49 +131,53 @@ class _ScaleRadialGaugeState extends State<ScaleRadialGauge>
               userMilliseconds: widget.animationDuration));
     }
 
-    return FittedBox(
-      child: SizedBox(
-        child: Column(
-          children: [
-            widget.titlePosition == TitlePosition.top
-                ? SizedBox(
-                    height: 20,
-                    child: widget.title,
-                  )
-                : const SizedBox(
-                    height: 20,
-                  ),
-            SizedBox(
-              height: widget.size,
-              width: widget.size,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CustomPaint(
-                  painter: ScaleRadialGaugePainter(
-                    sweepAngle: animationController.value,
-                    pointerColor: widget.pointerColor,
-                    needleColor: widget.needleColor,
-                    minValue: widget.minValue,
-                    maxValue: widget.maxValue,
-                    actualValue: widget.actualValue,
-                    decimalPlaces: widget.decimalPlaces,
-                    unit: widget.unit,
+    return SizedBox(
+      width: widget.size,
+      height: widget.size,
+      child: FittedBox(
+        child: SizedBox(
+          child: Column(
+            children: [
+              widget.titlePosition == TitlePosition.top
+                  ? SizedBox(
+                      height: 20,
+                      child: widget.title,
+                    )
+                  : const SizedBox(
+                      height: 20,
+                    ),
+              SizedBox(
+                height: 200,
+                width: 200,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CustomPaint(
+                    painter: ScaleRadialGaugePainter(
+                      sweepAngle: animationController.value,
+                      pointerColor: widget.pointerColor,
+                      needleColor: widget.needleColor,
+                      minValue: widget.minValue,
+                      maxValue: widget.maxValue,
+                      actualValue: widget.actualValue,
+                      decimalPlaces: widget.decimalPlaces,
+                      unit: widget.unit,
+                    ),
                   ),
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            widget.titlePosition == TitlePosition.bottom
-                ? SizedBox(
-                    height: 30,
-                    child: widget.title,
-                  )
-                : const SizedBox(
-                    height: 20,
-                  )
-          ],
+              const SizedBox(
+                height: 10,
+              ),
+              widget.titlePosition == TitlePosition.bottom
+                  ? SizedBox(
+                      height: 30,
+                      child: widget.title,
+                    )
+                  : const SizedBox(
+                      height: 20,
+                    )
+            ],
+          ),
         ),
       ),
     );

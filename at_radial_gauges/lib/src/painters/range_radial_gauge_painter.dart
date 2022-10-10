@@ -52,9 +52,11 @@ class RangeRadialGaugePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final startAngle = Utils.degreesToRadians(startDegree);
     // final backgroundSweepAngle = Utils.degreesToRadians(maxDegree);
-    final center = Offset(size.width / 2, size.height / 2);
-    final radius = size.width * 1 / 2;
-    var arcRect = Rect.fromCircle(center: center, radius: radius);
+    final center = size.center(Offset.zero);
+    final radius = size.shortestSide * 0.5;
+    // var arcRect = Rect.fromCircle(center: center, radius: radius);
+    var arcRect =
+        Rect.fromCenter(center: center, width: size.width, height: size.height);
 
     // Create range arc first.
     double labelHeight = size.height / 2;
@@ -78,6 +80,12 @@ class RangeRadialGaugePainter extends CustomPainter {
           maxValue: double.parse(maxValue),
           maxDegrees: maxDegree);
 
+      // var arc = Path()
+      //   ..moveTo(center.dx - 2, center.dy)
+      //   ..relativeQuadraticBezierTo(
+      //       center.dx, center.dy - 5, center.dx + 2, center.dy);
+
+      // canvas.drawPath(arc, rangeArcPaint);
       canvas.drawArc(
           arcRect, rangeStartAngle, rangeSweepAngle, false, rangeArcPaint);
 
@@ -125,18 +133,14 @@ class RangeRadialGaugePainter extends CustomPainter {
       ..strokeWidth = 5
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.fill;
-    const needleLengthConstraints = 15;
+    final needleLengthConstraints = 000;
 
     // The sweepAngle start at 120 degrees from the start of a circle.
     var adjustedSweepAngle =
         sweepAngle + (startAngle - Utils.degreesToRadians(120));
     var needleEndPointOffset = Offset(
-        (center.dx) +
-            (radius - needleLengthConstraints) *
-                cos(pi / 1.5 + (adjustedSweepAngle)),
-        (center.dx) +
-            (radius - needleLengthConstraints) *
-                sin(pi / 1.5 + (adjustedSweepAngle)));
+        (center.dx) + radius * cos(pi / 1.5 + adjustedSweepAngle),
+        (center.dx) + radius * sin(pi / 1.5 + adjustedSweepAngle));
 
     canvas.drawLine(center, needleEndPointOffset, needlePaint);
     canvas.drawCircle(center, 5, needlePaint);
@@ -158,7 +162,7 @@ class RangeRadialGaugePainter extends CustomPainter {
       ..layout();
 
     var actualValueOffset =
-        Offset(size.width / 2 - valueTextPainter.width / 2, size.height / 1.8);
+        Offset(center.dx - valueTextPainter.width / 2, center.dy / 0.95);
 
     // paint value to canvas
     valueTextPainter.paint(canvas, actualValueOffset);

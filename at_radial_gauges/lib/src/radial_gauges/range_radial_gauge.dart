@@ -198,7 +198,7 @@ class _RangeRadialGaugeState extends State<RangeRadialGauge>
           ),
           widget.titlePosition == TitlePosition.bottom
               ? SizedBox(
-                  height: 0,
+                  height: 30,
                   child: widget.title,
                 )
               : const SizedBox(
