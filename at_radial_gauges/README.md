@@ -30,7 +30,7 @@ This open source package is written in Dart, supports Flutter and follows the
 @‎platform's decentralized, edge computing model with the following widgets: 
 - simple radial gauge
 - Scale radial gauge
-- Range radial gauge
+<!-- - Range radial gauge -->
   <!--- add package features here -->
 
 We welcome suggestions you may have to create more radial gauges or to add features to gauges already created. 
@@ -112,31 +112,49 @@ This package provides three beautiful gauges;
 
 #### Simple Radial Gauge Example
 
-The code snippet below shows the simple gauge widget with the required  `actualValue`, `maxValue` and the optional `icon`, `duration` and `title` properties. The `duration` property controls the duration of the animation of this widget.
+The code snippet below shows the simple gauge widget with the required  `actualValue`, `maxValue` and the optional properties. 
 
 ```dart
 SimpleRadialGauge(
     actualValue: 50,
     maxValue: 100,
+    // Optional Parameters
+    minValue: 0,
+    title: Text('Simple Radial Gauge'),
+    titlePosition: TitlePosition.top,
+    unit: 'L',
     icon: Icon(Icons.water),
-    duration: 500,
-    title: Text('Simple Radial Gauge',)
+    pointerColor: Colors.blue,
+    decimalPlaces: 0,
+    isAnimate: true,
+    animationDuration: 2000,
+    size: 400,
 ),
 ```
 ![alt_text](images/simple_radial_gauge.png "Simple Radial Gauge")
 #### Scale Radial Gauge
 
-The code snippet below shows the scale gauge widget with the required  `actualValue`, `maxValue` and the optional `title` properties.
+The code snippet below shows the scale gauge widget with the required  `actualValue`, `maxValue` and the optional properties.
 ```dart
 ScaleRadialGauge(
     maxValue: 100,
     actualValue: 70,
+    // Optional Parameters
+    minValue: 0,
+    size: 400,
     title: Text('Scale Radial Gauge'),
-),
+    titlePosition: TitlePosition.top,
+    pointerColor: Colors.blue,
+    needleColor: Colors.blue,
+    decimalPlaces: 0,
+    isAnimate: true,
+    animationDuration: 2000,
+    unit: TextSpan(text: 'Km/h', style: TextStyle(fontSize: 10)),
+)
 ```
 ![alt_text](images/scale_radial_gauge.png "Scale Radial Gauge")
 
-#### Range Radial Gauge
+<!-- #### Range Radial Gauge
 The code snippet below shows the range gauge widget with the required  `actualValue`, `maxValue` and `range` properties. The  `maxDegree`, `startDegree`, `isLegend`, `title` and `titlePosition` properties are optional.
 
 ```dart
@@ -169,7 +187,7 @@ RangeRadialGauge(
     ],
 ),
 ```
-![alt_text](images/range_radial_gauge.png "Range Radial Gauge")
+![alt_text](images/range_radial_gauge.png "Range Radial Gauge") -->
 
 For more information, please see the example tab or API documentation listed on pub.dev. 
 

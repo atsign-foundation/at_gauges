@@ -33,7 +33,7 @@ class MyGauges extends StatelessWidget {
         child: ListView(
           children: const [
             SimpleRadialGauge(
-              actualValue: 50,
+              actualValue: 70,
               maxValue: 100,
               // Optional Parameters
               minValue: 0,
