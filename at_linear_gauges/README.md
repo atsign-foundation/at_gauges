@@ -19,25 +19,37 @@ your package name below and at_radial_gauges with the name of the repo
 The README should be addressed to somebody who's never seen this before.
 But also don't assume that they're a novice.
 -->
-The at_radial_gauges package is for Flutter developers who want to build beautiful and customizable gauges.
+The at_linear_gauges package is for Flutter developers who want to build beautiful and customizable linear gauges.
 
 <!---
 Give some context and state the intent - we welcome contributions - we want
 pull requests and to hear about issues. Include the boilerplate language
 below to add some context to @‎platform packages 
 -->
-This open source package is written in Dart, supports Flutter and follows the
-@‎platform's decentralized, edge computing model with the following features: 
-- Cryptographic control of data access through personal data stores
-- No application backend needed
-- End to end encryption where only the data owner has the keys
-- Private and surveillance free connectivity
-- Create radial gauges
+This open source package is written in Dart, supports Flutter  with the following features: 
+
+- Set maximum value
+- Set actual value
+- set minimum value
+- set the number of divisions
+- set the size of the gauge
+- Set tile
+- Set title position
+- Set pointer color
+- Set pointer icon
+- Orient Gauge Vertically of horizontally
+- Set decimal places
+- Turn on/off animation
+- Set animation duration
+- Set stroke width of the gauge
+- Set stroke width of the range
+- Set stroke width of the major ticks
+- Set stroke width of the minor ticks
+- Set the text style of the actual value
+  
 - <!--- add package features here -->
 
-We call giving people control of access to their data “flipping the internet”
-and you can learn more about how it works by reading this
-[overview](https://atsign.dev/docs/overview/).
+We welcome suggestions you may have to create more linear gauges or to add features to gauges already created.
 
 <!---
 Does this package publish to pub.dev or similar? This README will be the
@@ -45,7 +57,7 @@ first thing that developers see there and should be written such that it
 lets them quickly assess if it fits their need.
 -->
 ## Get started
-There are three options to get started using this package.
+There are two options to get started using this package.
 
 <!---
 If the package has a template that at_app uses to generate a skeleton app,
@@ -76,10 +88,10 @@ developer to get started.
 <!---
 Make sure to edit the link below to refer to your package repo.
 -->
-Feel free to fork a copy of the source from the [GitHub repo](https://github.com/atsign-foundation/at_gauges). The example code contained there is the same as the template that is used by at_app above.
+Feel free to fork a copy of the source from the [GitHub repo](https://github.com/atsign-foundation/at_gauges). 
 
 ```sh
-$ git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY
+$ git clone https://github.com/atsign-foundation/at_gauges
 ```
 
 <!---
@@ -88,7 +100,7 @@ Please be sure to replace the package name in the url below the right one for th
 -->
 ### 2. Manually add the package to a project
 
-Instructions on how to manually add this package to you project can be found on pub.dev [here](https://pub.dev/packages/at_radial_gauges/install).
+Instructions on how to manually add this package to you project can be found on pub.dev [here](https://pub.dev/packages/at_linear_gauges/install).
 
 <!---
 Include an explanation on how to setup and use the package
@@ -101,7 +113,7 @@ Add details on how to setup the package
 ### Setup
 This package need to be imported like this;
 ```dart
-import 'package:at_radial_gauges/at_radial_gauges.dart';
+import 'package:at_linear_gauges/at_linear_gauges.dart';
 ```
 <!---
 Add details on how to use the package in an application
@@ -114,66 +126,36 @@ Make sure your source code annotations are clear and comprehensive.
 
 This package provides three beautiful gauges;
 
-#### Simple Radial Gauge Example
+#### Simple Linear Gauge Example
 
-The code snippet below shows the simple gauge widget with the required  `actualValue`, `maxValue` and the optional `icon`, `duration` and `title` properties. The `duration` property controls the duration of the animation of this widget.
+The code snippet below shows the simple gauge widget with the required  `actualValue`, `maxValue` and the optional` properties.
 
 ```dart
-SimpleRadialGauge(
-    actualValue: 50,
+SimpleLinearGauge(
     maxValue: 100,
-    icon: Icon(Icons.water),
-    duration: 500,
-    title: Text('Simple Radial Gauge',)
-),
-```
-![alt_text](images/simple_radial_gauge.png "Simple Radial Gauge")
-#### Scale Radial Gauge
-
-The code snippet below shows the scale gauge widget with the required  `actualValue`, `maxValue` and the optional `title` properties.
-```dart
-ScaleRadialGauge(
-    maxValue: 100,
-    actualValue: 70,
-    title: Text('Scale Radial Gauge'),
-),
-```
-![alt_text](images/scale_radial_gauge.png "Scale Radial Gauge")
-
-#### Range Radial Gauge
-The code snippet below shows the range gauge widget with the required  `actualValue`, `maxValue` and `range` properties. The  `maxDegree`, `startDegree`, `isLegend`, `title` and `titlePosition` properties are optional.
-
-```dart
-RangeRadialGauge(
-    maxValue: 75,
-    actualValue: 40,
-    maxDegree: 180,
-    startDegree: 180,
-    title: const Text('Range Radial Gauge'),
+    actualValue: 76,
+    //Optional Parameters
+    minValue: 0,
+    divisions: 10,
+    size: double.infinity,
+    title: const Text('Simple Linear Gauge'),
     titlePosition: TitlePosition.top,
-    ranges: [
-        Range(
-        label: 'slow',
-        lowerLimit: 0,
-        upperLimit: 50,
-        backgroundColor: Colors.green,
-        ),
-        Range(
-        label: 'medium',
-        lowerLimit: 50,
-        upperLimit: 70,
-        backgroundColor: Colors.orange,
-        ),
-        Range(
-        label: 'fast',
-        lowerLimit: 70,
-        upperLimit: 75,
-        backgroundColor: Colors.red,
-        ),
-    ],
+    pointerColor: Colors.blue,
+    pointerIcon: const Icon(Icons.arrow_right, size: 40),
+    gaugeOrientation: GaugeOrientation.vertical,
+    decimalPlaces: 0,
+    isAnimate: true,
+    animationDuration: 2000,
+    gaugeStrokeWidth: 5,
+    rangeStrokeWidth: 5,
+    majorTickStrokeWidth: 5,
+    minorTickStrokeWidth: 5,
+    actualValueTextStyle: const TextStyle(color: Colors.black, fontSize: 20),
+    majorTickValueTextStyle: const TextStyle(color: Colors.black),
 ),
 ```
-![alt_text](images/range_radial_gauge.png "Range Radial Gauge")
+![alt_text](images/simple_linear_gauge.png "Simple Linear Gauge")
+
 
 For more information, please see the example tab or API documentation listed on pub.dev. 
 

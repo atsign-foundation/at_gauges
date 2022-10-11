@@ -13,7 +13,10 @@ class SimpleLinearGauge extends LinearCustomGauge {
     Text title = const Text(''),
     TitlePosition titlePosition = TitlePosition.top,
     Color pointerColor = Colors.blue,
-    Icon pointerIcon = const Icon(Icons.arrow_right_sharp, color: Colors.black),
+    Icon pointerIcon = const Icon(
+      Icons.arrow_right_sharp,
+      color: Colors.black,
+    ),
     GaugeOrientation gaugeOrientation = GaugeOrientation.vertical,
     int decimalPlaces = 0,
     bool isAnimate = true,

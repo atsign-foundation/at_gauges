@@ -68,7 +68,7 @@ abstract class LinearCustomPainter extends CustomPainter {
   /// Sets the [TextStyle] for the actualValue.
   final TextStyle actualValueTextStyle;
 
-  /// Sets the [TextStyle] for the mjorTicksValue.
+  /// Sets the [TextStyle] for the majorTicksValue.
   final TextStyle majorTicksValueTextStyle;
 
   /// Orient the gauge vertically or horizontally.
@@ -195,7 +195,7 @@ abstract class LinearCustomPainter extends CustomPainter {
     for (var i = 0; i <= (divisions); i++) {
       // multiply the interval by the division to find the value at the division.
       var value = (i * valueInterval) + minValue;
-      // if (value > minValue) {
+
       var stringValue = value.toStringAsFixed(decimalPlaces);
 
       // sets the paint properties of the tick value.
@@ -206,23 +206,38 @@ abstract class LinearCustomPainter extends CustomPainter {
         textDirection: TextDirection.ltr,
       )..layout();
 
-      /// Find the position of the ticks
-      final Offset majorTickValuePosition =
-          Offset((size.width / 1.7) + gaugeStrokeWidth, majorTickMarkPosition);
-      final pivot = majorTickValuePainter.size.center(majorTickValuePosition);
-      if (gaugeOrientation == GaugeOrientation.horizontal) {
-        canvas.save();
-        canvas.translate(pivot.dx, pivot.dy);
-        canvas.rotate(Helper.degreesToRadians(-90));
-        canvas.translate(-pivot.dx, -pivot.dy);
-        majorTickValuePainter.paint(canvas, majorTickValuePosition);
-        canvas.restore();
-      } else {
-        majorTickValuePainter.paint(canvas, majorTickValuePosition);
+      switch (gaugeOrientation) {
+        case GaugeOrientation.horizontal:
+
+          /// Find the position of the ticks
+
+          final Offset majorTickValuePosition = Offset(
+              (size.width / 1.65) +
+                  gaugeStrokeWidth -
+                  (majorTickValuePainter.width / 2),
+              majorTickMarkPosition);
+
+          final pivot =
+              majorTickValuePainter.size.center(majorTickValuePosition);
+
+          canvas.save();
+          canvas.translate(pivot.dx, pivot.dy);
+          canvas.rotate(Helper.degreesToRadians(-90));
+          canvas.translate(-pivot.dx, -pivot.dy);
+
+          majorTickValuePainter.paint(canvas, majorTickValuePosition);
+          canvas.restore();
+          break;
+        case GaugeOrientation.vertical:
+
+          /// Find the position of the ticks
+          final Offset majorTickValuePosition = Offset(
+              (size.width / 1.7) + gaugeStrokeWidth, majorTickMarkPosition);
+          majorTickValuePainter.paint(canvas, majorTickValuePosition);
+          break;
       }
 
       majorTickMarkPosition = majorTickMarkPosition + ticksInterval;
-      // }
     }
   }
 
@@ -243,31 +258,42 @@ abstract class LinearCustomPainter extends CustomPainter {
   /// Draws the gauge pointer icon
   void drawPointerIcon(Canvas canvas, Size size) {
     final pointerIconPainter = TextPainter(
-      textScaleFactor: 2,
+      // textScaleFactor: 1,
       text: TextSpan(
         text: String.fromCharCode(pointerIcon.icon!.codePoint),
         style: TextStyle(
-          color: pointerColor,
-          fontSize: pointerIcon.size,
-          fontFamily: pointerIcon.icon!.fontFamily,
+          color: pointerIcon.color == null ? Colors.black : pointerIcon.color,
+          fontSize: pointerIcon.size == null ? 25 : pointerIcon.size,
           package: pointerIcon.icon!.fontPackage,
+          fontFamily: pointerIcon.icon!.fontFamily,
         ),
       ),
       textDirection: TextDirection.ltr,
     )..layout();
 
-    final Offset pointerIconPosition = Offset((size.width / 2.5),
-        getActualValuePosition(size) - (pointerIconPainter.width / 2));
-    if (gaugeOrientation == GaugeOrientation.horizontal) {
-      final pivot = pointerIconPainter.size.center(pointerIconPosition);
-      canvas.save();
-      canvas.translate(pivot.dx, pivot.dy);
-      canvas.rotate(Helper.degreesToRadians(-90));
-      canvas.translate(-pivot.dx, -pivot.dy);
-      pointerIconPainter.paint(canvas, pointerIconPosition);
-      canvas.restore();
-    } else {
-      pointerIconPainter.paint(canvas, pointerIconPosition);
+    switch (gaugeOrientation) {
+      case GaugeOrientation.horizontal:
+        final Offset pointerIconPosition = Offset(
+            (size.width / 2.5) - pointerIconPainter.width + 40,
+            getActualValuePosition(size) - (pointerIconPainter.height / 2));
+        final pivot = pointerIconPainter.size.center(pointerIconPosition);
+        canvas.save();
+        canvas.translate(pivot.dx, pivot.dy);
+        canvas.rotate(Helper.degreesToRadians(-90));
+        canvas.translate(-pivot.dx, -pivot.dy);
+        pointerIconPainter.paint(canvas, pointerIconPosition);
+        canvas.restore();
+        break;
+      case GaugeOrientation.vertical:
+        final Offset pointerIconPosition = Offset(
+            (size.width / 2.5) +
+                (pointerIconPainter.width - pointerIconPainter.width),
+            getActualValuePosition(size) - (pointerIconPainter.height / 2));
+        pointerIconPainter.paint(canvas, pointerIconPosition);
+
+        print(pointerIconPainter.width);
+
+        break;
     }
   }
 
@@ -281,18 +307,20 @@ abstract class LinearCustomPainter extends CustomPainter {
       textDirection: TextDirection.ltr,
     )..layout();
 
-    final Offset pointerIconPosition = Offset((size.width / 2.8),
-        getActualValuePosition(size) - (actualValuePainter.width / 2));
+    final Offset actualValuePosition = Offset(
+      (size.width / 2.8) - actualValuePainter.width + 20,
+      getActualValuePosition(size) - (actualValuePainter.height / 2),
+    );
     if (gaugeOrientation == GaugeOrientation.horizontal) {
-      final pivot = actualValuePainter.size.center(pointerIconPosition);
+      final pivot = actualValuePainter.size.center(actualValuePosition);
       canvas.save();
       canvas.translate(pivot.dx, pivot.dy);
       canvas.rotate(Helper.degreesToRadians(-90));
       canvas.translate(-pivot.dx, -pivot.dy);
-      actualValuePainter.paint(canvas, pointerIconPosition);
+      actualValuePainter.paint(canvas, actualValuePosition);
       canvas.restore();
     } else {
-      actualValuePainter.paint(canvas, pointerIconPosition);
+      actualValuePainter.paint(canvas, actualValuePosition);
     }
   }
 
