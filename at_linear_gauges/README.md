@@ -37,7 +37,7 @@ This open source package is written in Dart, supports Flutter  with the followin
 - Set title position
 - Set pointer color
 - Set pointer icon
-- Orient Gauge Vertically or horizontally
+- Orient gauge vertically or horizontally
 - Set decimal places
 - Turn on/off animation
 - Set animation duration
@@ -47,7 +47,7 @@ This open source package is written in Dart, supports Flutter  with the followin
 - Set stroke width of the minor ticks
 - Set the text style of the actual value
   
-- <!--- add package features here -->
+<!--- add package features here -->
 
 We welcome suggestions you may have to create more linear gauges or to add features to gauges already created.
 
