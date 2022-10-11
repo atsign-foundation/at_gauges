@@ -37,7 +37,7 @@ This open source package is written in Dart, supports Flutter  with the followin
 - Set title position
 - Set pointer color
 - Set pointer icon
-- Orient Gauge Vertically of horizontally
+- Orient Gauge Vertically or horizontally
 - Set decimal places
 - Turn on/off animation
 - Set animation duration
