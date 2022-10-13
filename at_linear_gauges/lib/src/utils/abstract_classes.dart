@@ -258,7 +258,6 @@ abstract class LinearCustomPainter extends CustomPainter {
   /// Draws the gauge pointer icon
   void drawPointerIcon(Canvas canvas, Size size) {
     final pointerIconPainter = TextPainter(
-      // textScaleFactor: 1,
       text: TextSpan(
         text: String.fromCharCode(pointerIcon.icon!.codePoint),
         style: TextStyle(
@@ -274,7 +273,7 @@ abstract class LinearCustomPainter extends CustomPainter {
     switch (gaugeOrientation) {
       case GaugeOrientation.horizontal:
         final Offset pointerIconPosition = Offset(
-            (size.width / 2.5) - pointerIconPainter.width + 40,
+            (size.width / 2.5) - pointerIconPainter.width + 30,
             getActualValuePosition(size) - (pointerIconPainter.height / 2));
         final pivot = pointerIconPainter.size.center(pointerIconPosition);
         canvas.save();
@@ -286,13 +285,9 @@ abstract class LinearCustomPainter extends CustomPainter {
         break;
       case GaugeOrientation.vertical:
         final Offset pointerIconPosition = Offset(
-            (size.width / 2.5) +
-                (pointerIconPainter.width - pointerIconPainter.width),
+            (size.width / 2.5) - pointerIconPainter.width + 30,
             getActualValuePosition(size) - (pointerIconPainter.height / 2));
         pointerIconPainter.paint(canvas, pointerIconPosition);
-
-        print(pointerIconPainter.width);
-
         break;
     }
   }
@@ -308,19 +303,23 @@ abstract class LinearCustomPainter extends CustomPainter {
     )..layout();
 
     final Offset actualValuePosition = Offset(
-      (size.width / 2.8) - actualValuePainter.width + 20,
+      (size.width / 2.8) -
+          actualValuePainter.width +
+          (20 - ((pointerIcon.size ?? 24.0) - 20)),
       getActualValuePosition(size) - (actualValuePainter.height / 2),
     );
-    if (gaugeOrientation == GaugeOrientation.horizontal) {
-      final pivot = actualValuePainter.size.center(actualValuePosition);
-      canvas.save();
-      canvas.translate(pivot.dx, pivot.dy);
-      canvas.rotate(Helper.degreesToRadians(-90));
-      canvas.translate(-pivot.dx, -pivot.dy);
-      actualValuePainter.paint(canvas, actualValuePosition);
-      canvas.restore();
-    } else {
-      actualValuePainter.paint(canvas, actualValuePosition);
+    switch (gaugeOrientation) {
+      case GaugeOrientation.horizontal:
+        final pivot = actualValuePainter.size.center(actualValuePosition);
+        canvas.save();
+        canvas.translate(pivot.dx, pivot.dy);
+        canvas.rotate(Helper.degreesToRadians(-90));
+        canvas.translate(-pivot.dx, -pivot.dy);
+        actualValuePainter.paint(canvas, actualValuePosition);
+        canvas.restore();
+        break;
+      case GaugeOrientation.vertical:
+        actualValuePainter.paint(canvas, actualValuePosition);
     }
   }
 

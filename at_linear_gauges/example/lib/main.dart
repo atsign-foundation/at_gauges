@@ -49,7 +49,11 @@ class _MyHomePageState extends State<MyHomePage> {
             title: const Text('Simple Linear Gauge'),
             titlePosition: TitlePosition.top,
             pointerColor: Colors.blue,
-            pointerIcon: const Icon(Icons.arrow_right, size: 40),
+            pointerIcon: const Icon(
+              Icons.water_drop,
+              color: Colors.blue,
+              // size: 40,
+            ),
             gaugeOrientation: GaugeOrientation.vertical,
             decimalPlaces: 0,
             isAnimate: true,
