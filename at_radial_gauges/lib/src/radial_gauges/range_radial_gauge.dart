@@ -36,6 +36,8 @@ class RangeRadialGauge extends StatefulWidget {
         assert(startDegree <= 360, 'startDegree must be less than 360'),
         assert(actualValue >= minValue,
             'actualValue must be greater than or equal to minValue'),
+        assert(maxDegree > 0 && maxDegree <= 360,
+            'startDegree must be greater than 360'),
         super(key: key);
 
   /// Sets the minimum value of the gauge.
@@ -58,7 +60,7 @@ class RangeRadialGauge extends StatefulWidget {
   final double size;
 
   /// Sets the title of the gauge.
-  final Text? title;
+  final String? title;
 
   /// Sets the position of the title.
   final TitlePosition titlePosition;
@@ -158,14 +160,14 @@ class _RangeRadialGaugeState extends State<RangeRadialGauge>
     return FittedBox(
       child: Column(
         children: [
-          widget.titlePosition == TitlePosition.top
-              ? SizedBox(
-                  height: widget.rangeStrokeWidth - 10,
-                  child: widget.title,
-                )
-              : const SizedBox(
-                  height: 20,
-                ),
+          // widget.titlePosition == TitlePosition.top
+          //     ? SizedBox(
+          //         height: widget.rangeStrokeWidth - 10,
+          //         child: widget.title,
+          //       )
+          //     : const SizedBox(
+          //         height: 20,
+          //       ),
           SizedBox(
             height: widget.size,
             width: widget.size,
@@ -173,37 +175,40 @@ class _RangeRadialGaugeState extends State<RangeRadialGauge>
               padding: const EdgeInsets.all(8.0),
               child: CustomPaint(
                 painter: RangeRadialGaugePainter(
-                    sweepAngle: animationController.value,
-                    pointerColor: widget.pointerColor,
-                    maxValue:
-                        widget.maxValue.toStringAsFixed(widget.decimalPlaces),
-                    minValue:
-                        widget.minValue.toStringAsFixed(widget.decimalPlaces),
-                    ranges: widget.ranges,
-                    actualValue: widget.actualValue,
-                    decimalPlaces: widget.decimalPlaces,
-                    strokeWidth: widget.rangeStrokeWidth,
-                    actualValueTextStyle: widget.actualValueTextStyle,
-                    maxDegree: widget.maxDegree,
-                    startDegree: widget.startDegree,
-                    isLegend: widget.isLegend,
-                    unit: widget.unit),
+                  sweepAngle: animationController.value,
+                  pointerColor: widget.pointerColor,
+                  maxValue:
+                      widget.maxValue.toStringAsFixed(widget.decimalPlaces),
+                  minValue:
+                      widget.minValue.toStringAsFixed(widget.decimalPlaces),
+                  ranges: widget.ranges,
+                  actualValue: widget.actualValue,
+                  decimalPlaces: widget.decimalPlaces,
+                  strokeWidth: widget.rangeStrokeWidth,
+                  actualValueTextStyle: widget.actualValueTextStyle,
+                  maxDegree: widget.maxDegree,
+                  startDegree: widget.startDegree,
+                  isLegend: widget.isLegend,
+                  unit: widget.unit,
+                  titlePosition: widget.titlePosition,
+                  title: widget.title,
+                ),
               ),
             ),
           ),
-          SizedBox(
-            height: widget.titlePosition == TitlePosition.bottom
-                ? widget.rangeStrokeWidth - 10
-                : 0,
-          ),
-          widget.titlePosition == TitlePosition.bottom
-              ? SizedBox(
-                  height: 30,
-                  child: widget.title,
-                )
-              : const SizedBox(
-                  height: 20,
-                )
+          // SizedBox(
+          //   height: widget.titlePosition == TitlePosition.bottom
+          //       ? widget.rangeStrokeWidth - 10
+          //       : 0,
+          // ),
+          // widget.titlePosition == TitlePosition.bottom
+          //     ? SizedBox(
+          //         height: 30,
+          //         child: widget.title,
+          //       )
+          //     : const SizedBox(
+          //         height: 20,
+          //       )
         ],
       ),
     );

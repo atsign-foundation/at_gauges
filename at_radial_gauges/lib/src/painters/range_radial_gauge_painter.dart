@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:at_radial_gauges/src/utils/enums.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/range.dart';
@@ -20,8 +21,11 @@ class RangeRadialGaugePainter extends CustomPainter {
     required this.strokeWidth,
     required this.actualValueTextStyle,
     required this.unit,
+    this.titlePosition = TitlePosition.bottom,
+    this.title,
     Key? key,
   });
+
   final double sweepAngle;
   final Color pointerColor;
   final String minValue;
@@ -29,6 +33,8 @@ class RangeRadialGaugePainter extends CustomPainter {
   final double actualValue;
   final TextSpan unit;
   final int decimalPlaces;
+  final TitlePosition titlePosition;
+  final String? title;
 
   /// Sets the ranges for the gauge.
   List<Range> ranges;
@@ -53,17 +59,22 @@ class RangeRadialGaugePainter extends CustomPainter {
     final startAngle = Utils.degreesToRadians(startDegree);
     // final backgroundSweepAngle = Utils.degreesToRadians(maxDegree);
     final center = size.center(Offset.zero);
-    final radius = size.shortestSide * 0.5;
+    final radius = (size.shortestSide - 40) * 0.40;
     // var arcRect = Rect.fromCircle(center: center, radius: radius);
-    var arcRect =
-        Rect.fromCenter(center: center, width: size.width, height: size.height);
+    var arcRect = Rect.fromCenter(
+        center: center,
+        width: (size.width - strokeWidth - 40),
+        height: size.height - strokeWidth - 40);
 
     // Create range arc first.
     double labelHeight = size.height / 2;
+
     for (final range in ranges) {
       final rangeArcPaint = Paint()
         ..color = range.backgroundColor
-        ..strokeWidth = strokeWidth
+        ..strokeWidth = strokeWidth >= ((size.width - 40) / 2)
+            ? (size.width - 40) / 2
+            : strokeWidth
         ..strokeCap = StrokeCap.butt
         ..style = PaintingStyle.stroke;
 
@@ -75,10 +86,11 @@ class RangeRadialGaugePainter extends CustomPainter {
           startAngle;
       // Because the sweep angle is calculated from 0 the lowerlimit is subtracted from upperlimit to end the sweep angle at the correct degree on the arc.
       final rangeSweepAngle = Utils.actualValueToSweepAngleRadian(
-          minValue: 0,
-          actualValue: range.upperLimit - range.lowerLimit,
-          maxValue: double.parse(maxValue),
-          maxDegrees: maxDegree);
+        minValue: 0,
+        actualValue: range.upperLimit - range.lowerLimit,
+        maxValue: double.parse(maxValue),
+        maxDegrees: maxDegree,
+      );
 
       // var arc = Path()
       //   ..moveTo(center.dx - 2, center.dy)
@@ -133,14 +145,15 @@ class RangeRadialGaugePainter extends CustomPainter {
       ..strokeWidth = 5
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.fill;
-    final needleLengthConstraints = 000;
 
     // The sweepAngle start at 120 degrees from the start of a circle.
     var adjustedSweepAngle =
         sweepAngle + (startAngle - Utils.degreesToRadians(120));
+
     var needleEndPointOffset = Offset(
-        (center.dx) + radius * cos(pi / 1.5 + adjustedSweepAngle),
-        (center.dx) + radius * sin(pi / 1.5 + adjustedSweepAngle));
+      (center.dx) + radius * cos(pi / 1.5 + adjustedSweepAngle),
+      (center.dx) + radius * sin(pi / 1.5 + adjustedSweepAngle),
+    );
 
     canvas.drawLine(center, needleEndPointOffset, needlePaint);
     canvas.drawCircle(center, 5, needlePaint);
@@ -166,6 +179,27 @@ class RangeRadialGaugePainter extends CustomPainter {
 
     // paint value to canvas
     valueTextPainter.paint(canvas, actualValueOffset);
+
+    ///Paint title
+    final TextPainter titleTextPainter = TextPainter(
+        text: TextSpan(
+          style: actualValueTextStyle,
+          children: [TextSpan(text: unit.text == '' ? '' : ' '), unit],
+          text: title ?? '',
+        ),
+        textDirection: TextDirection.ltr)
+      ..layout();
+
+    var titleValueOffset = titlePosition == TitlePosition.top
+        ? Offset((size.width - titleTextPainter.width) / 2, 0)
+        : maxDegree > 180
+            ? Offset(
+                (size.width - titleTextPainter.width) / 2, size.height - 17)
+            : Offset((size.width - titleTextPainter.width) / 2,
+                (size.height / 2) + 30);
+
+    // paint value to canvas
+    titleTextPainter.paint(canvas, titleValueOffset);
   }
 
   @override
