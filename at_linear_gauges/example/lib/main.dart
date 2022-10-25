@@ -54,7 +54,6 @@ class _MyHomePageState extends State<MyHomePage> {
               color: Colors.blue,
               // size: 40,
             ),
-            gaugeOrientation: GaugeOrientation.vertical,
             decimalPlaces: 0,
             isAnimate: true,
             animationDuration: 2000,

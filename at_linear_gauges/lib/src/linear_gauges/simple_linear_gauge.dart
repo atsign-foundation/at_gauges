@@ -17,7 +17,6 @@ class SimpleLinearGauge extends LinearCustomGauge {
       Icons.arrow_right_sharp,
       color: Colors.black,
     ),
-    GaugeOrientation gaugeOrientation = GaugeOrientation.vertical,
     int decimalPlaces = 0,
     bool isAnimate = true,
     int animationDuration = kDefaultAnimationDuration,
@@ -49,7 +48,7 @@ class SimpleLinearGauge extends LinearCustomGauge {
           minorTickStrokeWidth: minorTickStrokeWidth,
           actualValueTextStyle: actualValueTextStyle,
           majorTicksValueTextStyle: majorTickValueTextStyle,
-          gaugeOrientation: gaugeOrientation,
+          gaugeOrientation: GaugeOrientation.vertical,
         );
 
   @override

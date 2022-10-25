@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the SimpleLinearGauge constructor from Class SimpleLinearGauge from the at_gauges library, for the Dart programming language.">
+  <title>SimpleLinearGauge constructor - SimpleLinearGauge - at_gauges library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../../" data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">at_gauges</a></li>
+    <li><a href="../../at_gauges/at_gauges-library.html">at_gauges</a></li>
+    <li><a href="../../at_gauges/SimpleLinearGauge-class.html">SimpleLinearGauge</a></li>
+    <li class="self-crumb">SimpleLinearGauge constructor</li>
+  </ol>
+  <div class="self-name">SimpleLinearGauge</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+
+  <div id="dartdoc-main-content" class="main-content">
+      <div>
+<h1><span class="kind-constructor">SimpleLinearGauge</span> constructor 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
+</h1></div>
+
+    <section class="multi-line-signature">
+      <span class="name ">SimpleLinearGauge</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="-param-maxValue">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">maxValue</span>, </span></li>
+<li><span class="parameter" id="-param-actualValue"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">actualValue</span>, </span></li>
+<li><span class="parameter" id="-param-minValue"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">minValue</span> = <span class="default-value">0</span>, </span></li>
+<li><span class="parameter" id="-param-ranges"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../at_gauges/Range-class.html">Range</a>?</span>&gt;</span></span> <span class="parameter-name">ranges</span> = <span class="default-value">const []</span>, </span></li>
+<li><span class="parameter" id="-param-divisions"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">divisions</span> = <span class="default-value">10</span>, </span></li>
+<li><span class="parameter" id="-param-size"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">size</span> = <span class="default-value">800</span>, </span></li>
+<li><span class="parameter" id="-param-title"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/Text-class.html">Text</a></span> <span class="parameter-name">title</span> = <span class="default-value">const Text(&#39;&#39;)</span>, </span></li>
+<li><span class="parameter" id="-param-titlePosition"><span class="type-annotation"><a href="../../at_gauges/TitlePosition.html">TitlePosition</a></span> <span class="parameter-name">titlePosition</span> = <span class="default-value">TitlePosition.top</span>, </span></li>
+<li><span class="parameter" id="-param-pointerColor"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/Color-class.html">Color</a></span> <span class="parameter-name">pointerColor</span> = <span class="default-value">Colors.blue</span>, </span></li>
+<li><span class="parameter" id="-param-pointerIcon"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/Icon-class.html">Icon</a></span> <span class="parameter-name">pointerIcon</span> = <span class="default-value">const Icon(Icons.arrow_right_sharp, color: Colors.black)</span>, </span></li>
+<li><span class="parameter" id="-param-decimalPlaces"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">decimalPlaces</span> = <span class="default-value">0</span>, </span></li>
+<li><span class="parameter" id="-param-isAnimate"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">isAnimate</span> = <span class="default-value">true</span>, </span></li>
+<li><span class="parameter" id="-param-animationDuration"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">animationDuration</span> = <span class="default-value">kDefaultAnimationDuration</span>, </span></li>
+<li><span class="parameter" id="-param-gaugeStrokeWidth"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">gaugeStrokeWidth</span> = <span class="default-value">5.0</span>, </span></li>
+<li><span class="parameter" id="-param-rangeStrokeWidth"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">rangeStrokeWidth</span> = <span class="default-value">5.0</span>, </span></li>
+<li><span class="parameter" id="-param-majorTickStrokeWidth"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">majorTickStrokeWidth</span> = <span class="default-value">5</span>, </span></li>
+<li><span class="parameter" id="-param-minorTickStrokeWidth"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">minorTickStrokeWidth</span> = <span class="default-value">5.0</span>, </span></li>
+<li><span class="parameter" id="-param-actualValueTextStyle"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/painting/TextStyle-class.html">TextStyle</a></span> <span class="parameter-name">actualValueTextStyle</span> = <span class="default-value">const TextStyle(color: Colors.black)</span>, </span></li>
+<li><span class="parameter" id="-param-majorTickValueTextStyle"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/painting/TextStyle-class.html">TextStyle</a></span> <span class="parameter-name">majorTickValueTextStyle</span> = <span class="default-value">const TextStyle(color: Colors.black)</span>}</span></li>
+</ol>)
+    </section>
+
+    
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">SimpleLinearGauge({
+  required double maxValue,
+  required double actualValue,
+  double minValue = 0,
+  List&lt;Range?&gt; ranges = const [],
+  int divisions = 10,
+  double size = 800,
+  Text title = const Text(&#39;&#39;),
+  TitlePosition titlePosition = TitlePosition.top,
+  Color pointerColor = Colors.blue,
+  Icon pointerIcon = const Icon(
+    Icons.arrow_right_sharp,
+    color: Colors.black,
+  ),
+  int decimalPlaces = 0,
+  bool isAnimate = true,
+  int animationDuration = kDefaultAnimationDuration,
+  double gaugeStrokeWidth = 5.0,
+  double rangeStrokeWidth = 5.0,
+  double majorTickStrokeWidth = 5,
+  double minorTickStrokeWidth = 5.0,
+  TextStyle actualValueTextStyle = const TextStyle(color: Colors.black),
+  TextStyle majorTickValueTextStyle = const TextStyle(color: Colors.black),
+})  : assert(rangeStrokeWidth &lt;= gaugeStrokeWidth,
+          &#39;rangeStrokeWidth must not be greater than gaugeStrokeWidth&#39;),
+      super(
+        minValue: minValue,
+        maxValue: maxValue,
+        actualValue: actualValue,
+        ranges: ranges,
+        divisions: divisions,
+        size: size,
+        title: title,
+        titlePosition: titlePosition,
+        pointerColor: pointerColor,
+        pointerIcon: pointerIcon,
+        decimalPlaces: decimalPlaces,
+        isAnimate: isAnimate,
+        milliseconds: animationDuration,
+        gaugeStrokeWidth: gaugeStrokeWidth,
+        rangeStrokeWidth: rangeStrokeWidth,
+        majorTickStrokeWidth: majorTickStrokeWidth,
+        minorTickStrokeWidth: minorTickStrokeWidth,
+        actualValueTextStyle: actualValueTextStyle,
+        majorTicksValueTextStyle: majorTickValueTextStyle,
+        gaugeOrientation: GaugeOrientation.vertical,
+      );</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="../../index.html">at_gauges</a></li>
+  <li><a href="../../at_gauges/at_gauges-library.html">at_gauges</a></li>
+  <li><a href="../../at_gauges/SimpleLinearGauge-class.html">SimpleLinearGauge</a></li>
+  <li class="self-crumb">SimpleLinearGauge constructor</li>
+</ol>
+
+
+    <h5>SimpleLinearGauge class</h5>
+    <ol>
+
+        <li class="section-title"><a href="../../at_gauges/SimpleLinearGauge-class.html#constructors">Constructors</a></li>
+          <li><a href="../../at_gauges/SimpleLinearGauge/SimpleLinearGauge.html">SimpleLinearGauge</a></li>
+
+
+    <li class="section-title inherited">
+      <a href="../../at_gauges/SimpleLinearGauge-class.html#instance-properties">Properties</a>
+    </li>
+    <li class="inherited"><a href="../../at_gauges/LinearCustomGauge/actualValue.html">actualValue</a></li>
+    <li class="inherited"><a href="../../at_gauges/LinearCustomGauge/actualValueTextStyle.html">actualValueTextStyle</a></li>
+    <li class="inherited"><a href="../../at_gauges/LinearCustomGauge/decimalPlaces.html">decimalPlaces</a></li>
+    <li class="inherited"><a href="../../at_gauges/LinearCustomGauge/divisions.html">divisions</a></li>
+    <li class="inherited"><a href="../../at_gauges/LinearCustomGauge/gaugeOrientation.html">gaugeOrientation</a></li>
+    <li class="inherited"><a href="../../at_gauges/LinearCustomGauge/gaugeStrokeWidth.html">gaugeStrokeWidth</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/hashCode.html">hashCode</a></li>
+    <li class="inherited"><a href="../../at_gauges/LinearCustomGauge/isAnimate.html">isAnimate</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/key.html">key</a></li>
+    <li class="inherited"><a href="../../at_gauges/LinearCustomGauge/majorTickStrokeWidth.html">majorTickStrokeWidth</a></li>
+    <li class="inherited"><a href="../../at_gauges/LinearCustomGauge/majorTicksValueTextStyle.html">majorTicksValueTextStyle</a></li>
+    <li class="inherited"><a href="../../at_gauges/LinearCustomGauge/maxValue.html">maxValue</a></li>
+    <li class="inherited"><a href="../../at_gauges/LinearCustomGauge/milliseconds.html">milliseconds</a></li>
+    <li class="inherited"><a href="../../at_gauges/LinearCustomGauge/minorTickStrokeWidth.html">minorTickStrokeWidth</a></li>
+    <li class="inherited"><a href="../../at_gauges/LinearCustomGauge/minValue.html">minValue</a></li>
+    <li class="inherited"><a href="../../at_gauges/LinearCustomGauge/pointerColor.html">pointerColor</a></li>
+    <li class="inherited"><a href="../../at_gauges/LinearCustomGauge/pointerIcon.html">pointerIcon</a></li>
+    <li class="inherited"><a href="../../at_gauges/LinearCustomGauge/ranges.html">ranges</a></li>
+    <li class="inherited"><a href="../../at_gauges/LinearCustomGauge/rangeStrokeWidth.html">rangeStrokeWidth</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
+    <li class="inherited"><a href="../../at_gauges/LinearCustomGauge/size.html">size</a></li>
+    <li class="inherited"><a href="../../at_gauges/LinearCustomGauge/title.html">title</a></li>
+    <li class="inherited"><a href="../../at_gauges/LinearCustomGauge/titlePosition.html">titlePosition</a></li>
+
+    <li class="section-title"><a href="../../at_gauges/SimpleLinearGauge-class.html#instance-methods">Methods</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/StatefulWidget/createElement.html">createElement</a></li>
+    <li><a href="../../at_gauges/SimpleLinearGauge/createState.html">createState</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/debugDescribeChildren.html">debugDescribeChildren</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/debugFillProperties.html">debugFillProperties</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/toDiagnosticsNode.html">toDiagnosticsNode</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/Diagnosticable/toString.html">toString</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/toStringDeep.html">toStringDeep</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/foundation/DiagnosticableTree/toStringShallow.html">toStringShallow</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/toStringShort.html">toStringShort</a></li>
+
+    <li class="section-title inherited"><a href="../../at_gauges/SimpleLinearGauge-class.html#operators">Operators</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/Widget/operator_equals.html">operator ==</a></li>
+
+
+
+
+</ol>
+
+  </div><!--/.sidebar-offcanvas-left-->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    at_gauges
+      1.0.0+1
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+
