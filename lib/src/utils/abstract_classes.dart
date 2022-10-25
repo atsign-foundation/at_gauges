@@ -81,7 +81,7 @@ abstract class LinearCustomPainter extends CustomPainter {
   double getScaleLowerLimit(Size size) {
     switch (gaugeOrientation) {
       case GaugeOrientation.horizontal:
-        return size.width / kLowerScaleLimitHorizontal;
+        return size.height * kLowerScaleLimitHorizontal;
 
       case GaugeOrientation.vertical:
         return size.height / kLowerScaleLimitVertical;
@@ -92,7 +92,7 @@ abstract class LinearCustomPainter extends CustomPainter {
   double getScaleUpperLimit(Size size) {
     switch (gaugeOrientation) {
       case GaugeOrientation.horizontal:
-        return size.width / kUpperScaleLimitHorizontal;
+        return size.height * kUpperScaleLimitHorizontal;
 
       case GaugeOrientation.vertical:
         return size.height / kUpperScaleLimitVertical;
@@ -162,7 +162,7 @@ abstract class LinearCustomPainter extends CustomPainter {
     double minorTickMarkPosition = 0;
     switch (gaugeOrientation) {
       case GaugeOrientation.horizontal:
-        minorTickMarkPosition = size.width / kLowerScaleLimitHorizontal;
+        minorTickMarkPosition = getScaleLowerLimit(size);
         break;
       case GaugeOrientation.vertical:
         minorTickMarkPosition = size.height / kLowerScaleLimitVertical;

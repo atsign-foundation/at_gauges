@@ -62,6 +62,34 @@ class MyGauges extends StatelessWidget {
               animationDuration: 2000,
               unit: TextSpan(text: 'Km/h', style: TextStyle(fontSize: 10)),
             ),
+            RangeRadialGauge(
+              maxValue: 75,
+              actualValue: 50,
+              maxDegree: 180,
+              startDegree: 180,
+              title: const Text('Range Radial Gauge'),
+              titlePosition: TitlePosition.top,
+              ranges: [
+                Range(
+                  label: 'slow',
+                  lowerLimit: 0,
+                  upperLimit: 33,
+                  backgroundColor: Colors.green,
+                ),
+                Range(
+                  label: 'medium',
+                  lowerLimit: 33,
+                  upperLimit: 66,
+                  backgroundColor: Colors.orange,
+                ),
+                Range(
+                  label: 'fast',
+                  lowerLimit: 66,
+                  upperLimit: 75,
+                  backgroundColor: Colors.red,
+                ),
+              ],
+            ),
             SimpleLinearGauge(
               maxValue: 100,
               actualValue: 76,
