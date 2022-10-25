@@ -30,10 +30,11 @@ class MyGauges extends StatelessWidget {
     return Scaffold(
       // appBar: AppBar(title: const Text('Radial Gauges')),
       body: SafeArea(
-        child: ListView(
+        child: GridView.count(
+          crossAxisCount: 2,
           children: [
             const SimpleRadialGauge(
-              actualValue: 70,
+              actualValue: 50,
               maxValue: 100,
               // Optional Parameters
               minValue: 0,
@@ -45,7 +46,7 @@ class MyGauges extends StatelessWidget {
               decimalPlaces: 0,
               isAnimate: true,
               animationDuration: 2000,
-              size: 400,
+              size: 200,
             ),
             const ScaleRadialGauge(
               maxValue: 100,
@@ -62,41 +63,13 @@ class MyGauges extends StatelessWidget {
               animationDuration: 2000,
               unit: TextSpan(text: 'Km/h', style: TextStyle(fontSize: 10)),
             ),
-            RangeRadialGauge(
-              maxValue: 75,
-              actualValue: 50,
-              maxDegree: 180,
-              startDegree: 180,
-              title: const Text('Range Radial Gauge'),
-              titlePosition: TitlePosition.top,
-              ranges: [
-                Range(
-                  label: 'slow',
-                  lowerLimit: 0,
-                  upperLimit: 33,
-                  backgroundColor: Colors.green,
-                ),
-                Range(
-                  label: 'medium',
-                  lowerLimit: 33,
-                  upperLimit: 66,
-                  backgroundColor: Colors.orange,
-                ),
-                Range(
-                  label: 'fast',
-                  lowerLimit: 66,
-                  upperLimit: 75,
-                  backgroundColor: Colors.red,
-                ),
-              ],
-            ),
             SimpleLinearGauge(
               maxValue: 100,
               actualValue: 76,
               //Optional Parameters
               minValue: 0,
               divisions: 10,
-              size: 800,
+
               title: const Text('Simple Linear Gauge'),
               titlePosition: TitlePosition.top,
               pointerColor: Colors.blue,
@@ -108,12 +81,13 @@ class MyGauges extends StatelessWidget {
               decimalPlaces: 0,
               isAnimate: true,
               animationDuration: 2000,
+              gaugeOrientation: GaugeOrientation.vertical,
               gaugeStrokeWidth: 5,
               rangeStrokeWidth: 5,
-              majorTickStrokeWidth: 5,
-              minorTickStrokeWidth: 5,
+              majorTickStrokeWidth: 3,
+              minorTickStrokeWidth: 3,
               actualValueTextStyle:
-                  const TextStyle(color: Colors.black, fontSize: 20),
+                  const TextStyle(color: Colors.black, fontSize: 15),
               majorTickValueTextStyle: const TextStyle(color: Colors.black),
             ),
           ],

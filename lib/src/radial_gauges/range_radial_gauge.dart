@@ -155,56 +155,60 @@ class _RangeRadialGaugeState extends State<RangeRadialGauge>
               userMilliseconds: widget.animationDuration));
     }
 
-    return FittedBox(
-      child: Column(
-        children: [
-          widget.titlePosition == TitlePosition.top
-              ? SizedBox(
-                  height: widget.rangeStrokeWidth - 10,
-                  child: widget.title,
-                )
-              : const SizedBox(
-                  height: 20,
+    return SizedBox(
+      width: widget.size,
+      height: widget.size,
+      child: FittedBox(
+        child: Column(
+          children: [
+            widget.titlePosition == TitlePosition.top
+                ? SizedBox(
+                    height: widget.rangeStrokeWidth - 10,
+                    child: widget.title,
+                  )
+                : const SizedBox(
+                    height: 20,
+                  ),
+            SizedBox(
+              height: 200,
+              width: 200,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CustomPaint(
+                  painter: RangeRadialGaugePainter(
+                      sweepAngle: animationController.value,
+                      pointerColor: widget.pointerColor,
+                      maxValue:
+                          widget.maxValue.toStringAsFixed(widget.decimalPlaces),
+                      minValue:
+                          widget.minValue.toStringAsFixed(widget.decimalPlaces),
+                      ranges: widget.ranges,
+                      actualValue: widget.actualValue,
+                      decimalPlaces: widget.decimalPlaces,
+                      strokeWidth: widget.rangeStrokeWidth,
+                      actualValueTextStyle: widget.actualValueTextStyle,
+                      maxDegree: widget.maxDegree,
+                      startDegree: widget.startDegree,
+                      isLegend: widget.isLegend,
+                      unit: widget.unit),
                 ),
-          SizedBox(
-            height: widget.size,
-            width: widget.size,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: CustomPaint(
-                painter: RangeRadialGaugePainter(
-                    sweepAngle: animationController.value,
-                    pointerColor: widget.pointerColor,
-                    maxValue:
-                        widget.maxValue.toStringAsFixed(widget.decimalPlaces),
-                    minValue:
-                        widget.minValue.toStringAsFixed(widget.decimalPlaces),
-                    ranges: widget.ranges,
-                    actualValue: widget.actualValue,
-                    decimalPlaces: widget.decimalPlaces,
-                    strokeWidth: widget.rangeStrokeWidth,
-                    actualValueTextStyle: widget.actualValueTextStyle,
-                    maxDegree: widget.maxDegree,
-                    startDegree: widget.startDegree,
-                    isLegend: widget.isLegend,
-                    unit: widget.unit),
               ),
             ),
-          ),
-          SizedBox(
-            height: widget.titlePosition == TitlePosition.bottom
-                ? widget.rangeStrokeWidth - 10
-                : 0,
-          ),
-          widget.titlePosition == TitlePosition.bottom
-              ? SizedBox(
-                  height: 30,
-                  child: widget.title,
-                )
-              : const SizedBox(
-                  height: 20,
-                )
-        ],
+            SizedBox(
+              height: widget.titlePosition == TitlePosition.bottom
+                  ? widget.rangeStrokeWidth - 10
+                  : 0,
+            ),
+            widget.titlePosition == TitlePosition.bottom
+                ? SizedBox(
+                    height: 30,
+                    child: widget.title,
+                  )
+                : const SizedBox(
+                    height: 20,
+                  )
+          ],
+        ),
       ),
     );
   }

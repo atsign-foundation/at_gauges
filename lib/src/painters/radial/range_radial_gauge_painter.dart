@@ -132,7 +132,6 @@ class RangeRadialGaugePainter extends CustomPainter {
       ..strokeWidth = 5
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.fill;
-    final needleLengthConstraints = 000;
 
     // The sweepAngle start at 120 degrees from the start of a circle.
     var adjustedSweepAngle =

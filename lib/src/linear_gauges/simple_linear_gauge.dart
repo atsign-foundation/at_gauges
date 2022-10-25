@@ -8,9 +8,7 @@ class SimpleLinearGauge extends LinearCustomGauge {
     required double maxValue,
     required double actualValue,
     double minValue = 0,
-    List<Range?> ranges = const [],
     int divisions = 10,
-    double size = 800,
     Text title = const Text(''),
     TitlePosition titlePosition = TitlePosition.top,
     Color pointerColor = Colors.blue,
@@ -21,6 +19,7 @@ class SimpleLinearGauge extends LinearCustomGauge {
     int decimalPlaces = 0,
     bool isAnimate = true,
     int animationDuration = kDefaultAnimationDuration,
+    GaugeOrientation gaugeOrientation = GaugeOrientation.vertical,
     double gaugeStrokeWidth = 5.0,
     double rangeStrokeWidth = 5.0,
     double majorTickStrokeWidth = 5,
@@ -33,9 +32,7 @@ class SimpleLinearGauge extends LinearCustomGauge {
           minValue: minValue,
           maxValue: maxValue,
           actualValue: actualValue,
-          ranges: ranges,
           divisions: divisions,
-          size: size,
           title: title,
           titlePosition: titlePosition,
           pointerColor: pointerColor,
@@ -49,7 +46,7 @@ class SimpleLinearGauge extends LinearCustomGauge {
           minorTickStrokeWidth: minorTickStrokeWidth,
           actualValueTextStyle: actualValueTextStyle,
           majorTicksValueTextStyle: majorTickValueTextStyle,
-          gaugeOrientation: GaugeOrientation.vertical,
+          gaugeOrientation: gaugeOrientation,
         );
 
   @override
@@ -93,35 +90,25 @@ class _SimpleLinearGaugeState extends State<SimpleLinearGauge>
     if (animationController.value != widget.actualValue) {
       animationController.animateTo(widget.actualValue);
     }
-    return SizedBox(
-      width: widget.size,
-      height: widget.size,
-      child: FittedBox(
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          child: CustomPaint(
-            painter: SimpleLinearGaugePainter(
-              maxValue: widget.maxValue,
-              minValue: widget.minValue,
-              actualValue: animationController.value,
-              ranges: widget.ranges,
-              divisions: widget.divisions,
-              title: widget.title,
-              titlePosition: widget.titlePosition,
-              pointerColor: widget.pointerColor,
-              pointerIcon: widget.pointerIcon,
-              decimalPlaces: widget.decimalPlaces,
-              rangeStrokeWidth: widget.rangeStrokeWidth,
-              gaugeStrokeWidth: widget.gaugeStrokeWidth,
-              majorTickStrokeWidth: widget.majorTickStrokeWidth,
-              minorTickStrokeWidth: widget.minorTickStrokeWidth,
-              actualValueTextStyle: widget.actualValueTextStyle,
-              majorTicksValueTextStyle: widget.majorTicksValueTextStyle,
-              gaugeOrientation: widget.gaugeOrientation,
-            ),
-          ),
-        ),
+    return CustomPaint(
+      child: SizedBox.expand(),
+      painter: SimpleLinearGaugePainter(
+        maxValue: widget.maxValue,
+        minValue: widget.minValue,
+        actualValue: animationController.value,
+        divisions: widget.divisions,
+        title: widget.title,
+        titlePosition: widget.titlePosition,
+        pointerColor: widget.pointerColor,
+        pointerIcon: widget.pointerIcon,
+        decimalPlaces: widget.decimalPlaces,
+        rangeStrokeWidth: widget.rangeStrokeWidth,
+        gaugeStrokeWidth: widget.gaugeStrokeWidth,
+        majorTickStrokeWidth: widget.majorTickStrokeWidth,
+        minorTickStrokeWidth: widget.minorTickStrokeWidth,
+        actualValueTextStyle: widget.actualValueTextStyle,
+        majorTicksValueTextStyle: widget.majorTicksValueTextStyle,
+        gaugeOrientation: widget.gaugeOrientation,
       ),
     );
   }

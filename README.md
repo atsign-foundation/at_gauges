@@ -201,7 +201,6 @@ SimpleLinearGauge(
     //Optional Parameters
     minValue: 0,
     divisions: 10,
-    size: double.infinity,
     title: const Text('Simple Linear Gauge'),
     titlePosition: TitlePosition.top,
     pointerColor: Colors.blue,

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'constants.dart';
 import 'enums.dart';
 import 'radial_helper.dart';
-import 'range.dart';
 
 abstract class LinearCustomPainter extends CustomPainter {
   LinearCustomPainter({
@@ -11,7 +10,6 @@ abstract class LinearCustomPainter extends CustomPainter {
     required this.maxValue,
     required this.actualValue,
     required this.decimalPlaces,
-    required this.ranges,
     required this.divisions,
     required this.title,
     required this.titlePosition,
@@ -34,9 +32,6 @@ abstract class LinearCustomPainter extends CustomPainter {
 
   /// Sets the pointer value of the gauge.
   final double actualValue;
-
-  /// Sets the ranges for the gauge.
-  final List<Range?> ranges;
 
   /// Sets the major divisions of the gauges.
   final int divisions;
@@ -421,9 +416,7 @@ abstract class LinearCustomGauge extends StatefulWidget {
     required this.minValue,
     required this.maxValue,
     required this.actualValue,
-    required this.ranges,
     required this.divisions,
-    required this.size,
     required this.title,
     required this.titlePosition,
     required this.pointerColor,
@@ -452,13 +445,8 @@ abstract class LinearCustomGauge extends StatefulWidget {
   /// Sets the pointer value of the gauge.
   final double actualValue;
 
-  /// Sets the ranges for the gauge.
-  final List<Range?> ranges;
-
   /// Sets the major divisions of the gauges.
   final int divisions;
-
-  final double size;
 
   /// Sets the title of the gauge.
   final Text title;
@@ -500,6 +488,6 @@ abstract class LinearCustomGauge extends StatefulWidget {
   /// Sets the [TextStyle] for the actualValue.
   final TextStyle actualValueTextStyle;
 
-  /// Sets the [TextStyle] for the mjorTicksValue.
+  /// Sets the [TextStyle] for the majorTicksValue.
   final TextStyle majorTicksValueTextStyle;
 }
