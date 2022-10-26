@@ -31,7 +31,36 @@ class MyGauges extends StatelessWidget {
       // appBar: AppBar(title: const Text('Radial Gauges')),
       body: SafeArea(
         child: ListView(
-          children: const [
+          children: [
+            RangeRadialGauge(
+              maxValue: 75,
+              actualValue: 40,
+              maxDegree: 180,
+              startDegree: 180,
+              rangeStrokeWidth: 40,
+              title: const Text('Range Radial Gauge'),
+              titlePosition: TitlePosition.bottom,
+              ranges: [
+                Range(
+                  label: 'slow',
+                  lowerLimit: 0,
+                  upperLimit: 50,
+                  backgroundColor: Colors.green,
+                ),
+                Range(
+                  label: 'medium',
+                  lowerLimit: 50,
+                  upperLimit: 70,
+                  backgroundColor: Colors.orange,
+                ),
+                Range(
+                  label: 'fast',
+                  lowerLimit: 70,
+                  upperLimit: 75,
+                  backgroundColor: Colors.red,
+                ),
+              ],
+            ),
             SimpleRadialGauge(
               actualValue: 70,
               maxValue: 100,

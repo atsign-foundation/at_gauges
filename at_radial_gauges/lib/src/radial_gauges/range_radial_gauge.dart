@@ -154,7 +154,6 @@ class _RangeRadialGaugeState extends State<RangeRadialGauge>
               isAnimate: widget.isAnimate,
               userMilliseconds: widget.animationDuration));
     }
-
     return FittedBox(
       child: Column(
         children: [
@@ -166,11 +165,11 @@ class _RangeRadialGaugeState extends State<RangeRadialGauge>
               : const SizedBox(
                   height: 20,
                 ),
-          SizedBox(
-            height: widget.size,
+          Container(
+            height: (widget.maxDegree <= 180) ? (widget.size / 2) : widget.size,
             width: widget.size,
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.zero,
               child: CustomPaint(
                 painter: RangeRadialGaugePainter(
                     sweepAngle: animationController.value,

@@ -52,11 +52,18 @@ class RangeRadialGaugePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final startAngle = Utils.degreesToRadians(startDegree);
     // final backgroundSweepAngle = Utils.degreesToRadians(maxDegree);
-    final center = size.center(Offset.zero);
-    final radius = size.shortestSide * 0.5;
+    var center = size.center(Offset.zero);
+    if (maxDegree <= 180) {
+      center = size.center(Offset(0, size.height / 2));
+    }
+    var radius = size.width * 0.5 - strokeWidth / 2;
     // var arcRect = Rect.fromCircle(center: center, radius: radius);
     var arcRect =
-        Rect.fromCenter(center: center, width: size.width, height: size.height);
+        Rect.fromCenter(center: center, width: size.width - strokeWidth, height: size.height - strokeWidth);
+    if (maxDegree <= 180) {
+      arcRect =
+          Rect.fromCenter(center: center, width: size.width - strokeWidth, height: size.height * 2 - strokeWidth);
+    }
 
     // Create range arc first.
     double labelHeight = size.height / 2;
