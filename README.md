@@ -26,7 +26,7 @@ Give some context and state the intent - we welcome contributions - we want
 pull requests and to hear about issues. Include the boilerplate language
 below to add some context to @‎platform packages 
 -->
-This open source package is written in Dart, supports Flutter  with the following widgets: 
+This open source package is written in Dart, and it supports Flutter with the following widgets: 
   ##### SimpleRadialGauge
 
 ![gif](https://raw.githubusercontent.com/atsign-foundation/at_gauges/trunk/gifs/simple_radial_gauge.gif)
@@ -88,7 +88,7 @@ Please be sure to replace the package name in the url below the right one for th
 -->
 ### 2. Manually add the package to a project
 
-Instructions on how to manually add this package to you project can be found on pub.dev [here](https://pub.dev/packages/at_gauges/install).
+Instructions on how to manually add this package to your project can be found on pub.dev [here](https://pub.dev/packages/at_gauges/install).
 
 <!---
 Include an explanation on how to setup and use the package
@@ -99,7 +99,7 @@ Include an explanation on how to setup and use the package
 Add details on how to setup the package
 -->
 ### Setup
-This package need to be imported like this;
+This package needs to be imported as shown below:
 ```dart
 import 'package:at_gauges/at_gauges.dart';
 ```
@@ -112,11 +112,11 @@ Add details on how to use the package in an application
 Make sure your source code annotations are clear and comprehensive.
 -->
 
-This package provides three beautiful gauges;
+This package provides three beautiful gauges.
 
 #### Simple Radial Gauge Example
 
-The code snippet below shows the simple gauge widget with the required  `actualValue`, `maxValue` and the optional properties. 
+The code snippet below shows the simple gauge widget with the required `actualValue`, `maxValue` and the optional properties. 
 
 ```dart
 SimpleRadialGauge(
@@ -138,7 +138,7 @@ SimpleRadialGauge(
 ![alt_text](images/simple_radial_gauge.png "Simple Radial Gauge")
 #### Scale Radial Gauge
 
-The code snippet below shows the scale gauge widget with the required  `actualValue`, `maxValue` and the optional properties.
+The code snippet below shows the scale gauge widget with the required `actualValue`, `maxValue` and the optional properties.
 ```dart
 ScaleRadialGauge(
     maxValue: 100,
@@ -196,7 +196,7 @@ RangeRadialGauge(
 
 #### Simple Linear Gauge
 
-The code snippet below shows the simple gauge widget with the required  `actualValue`, `maxValue` and the optional` properties.
+The code snippet below shows the simple gauge widget with the required `actualValue`, `maxValue` and the optional properties.
 
 ```dart
 SimpleLinearGauge(
@@ -235,7 +235,7 @@ You should include language like below if you would like others to contribute
 to your package.
 -->
 ## Open source usage and contributions
-This is  open source code, so feel free to use it as is, suggest changes or 
+This is open source code, so feel free to use it as is, suggest changes or 
 enhancements or create your own version. See [CONTRIBUTING.md](CONTRIBUTING.md) 
 for detailed guidance on how to setup tools, tests and make a pull request.
 
