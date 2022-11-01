@@ -1,10 +1,10 @@
 name: at_gauges
-description: The at_radial_gauges library comes with highly customizable radial gauges.
+description: The at_gauges library comes with highly customizable gauges.
 
 # publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+1
-homepage: https://github.com/atsign-foundation/at_gauges/at_radial_gauges
+version: 1.0.1
+homepage: https://github.com/atsign-foundation/at_gauges/
 
 environment:
   sdk: ">=2.17.6 <3.0.0"
@@ -12,8 +12,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-  cupertino_icons: ^1.0.2
 
 dev_dependencies:
   flutter_test:
