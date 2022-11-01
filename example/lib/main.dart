@@ -46,7 +46,7 @@ class MyGauges extends StatelessWidget {
               decimalPlaces: 0,
               isAnimate: true,
               animationDuration: 2000,
-              size: 200,
+              size: 400,
             ),
             const ScaleRadialGauge(
               maxValue: 100,

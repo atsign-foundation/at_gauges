@@ -27,13 +27,18 @@ pull requests and to hear about issues. Include the boilerplate language
 below to add some context to @‎platform packages 
 -->
 This open source package is written in Dart, and it supports Flutter with the following widgets: 
-  ##### SimpleRadialGauge
 
-![gif](https://raw.githubusercontent.com/atsign-foundation/at_gauges/trunk/gifs/simple_radial_gauge.gif)
+##### SimpleRadialGauge
+
+![simple radial gauges gif](https://raw.githubusercontent.com/atsign-foundation/at_gauges/trunk/gifs/simple_radial_gauge.gif)
+
 ##### ScaleRadialGauge
-![simple_radial_gauge_gif](https://raw.githubusercontent.com/atsign-foundation/at_gauges/trunk/gifs/scale_gauge.gif)
+
+![scale radial gauge gif](https://raw.githubusercontent.com/atsign-foundation/at_gauges/trunk/gifs/scale_gauge.gif)
+
 ##### SimpleLinearGauge
-![simple_radial_gauge_gif](https://raw.githubusercontent.com/atsign-foundation/at_gauges/trunk/gifs/linear_gauge.gif)
+
+![simple linear gauge gif](https://raw.githubusercontent.com/atsign-foundation/at_gauges/trunk/gifs/linear_gauge.gif)
 <!-- - Range radial gauge -->
   <!--- add package features here -->
 
@@ -135,7 +140,8 @@ SimpleRadialGauge(
     size: 400,
 ),
 ```
-![alt_text](images/simple_radial_gauge.png "Simple Radial Gauge")
+
+![simple radial gauge](https://raw.githubusercontent.com/atsign-foundation/at_gauges/trunk/gifs/simple_radial_gauge_example_app.gif)
 #### Scale Radial Gauge
 
 The code snippet below shows the scale gauge widget with the required `actualValue`, `maxValue` and the optional properties.
@@ -156,7 +162,7 @@ ScaleRadialGauge(
     unit: TextSpan(text: 'Km/h', style: TextStyle(fontSize: 10)),
 )
 ```
-![alt_text](images/scale_radial_gauge.png "Scale Radial Gauge")
+![scale radial gauge](https://raw.githubusercontent.com/atsign-foundation/at_gauges/trunk/gifs/scale_radial_gauge_example_app.gif)
 
 
 <!-- #### Range Radial Gauge
@@ -208,19 +214,20 @@ SimpleLinearGauge(
     title: const Text('Simple Linear Gauge'),
     titlePosition: TitlePosition.top,
     pointerColor: Colors.blue,
-    pointerIcon: const Icon(Icons.arrow_right, size: 40),
+    pointerIcon: const Icon(Icons.water_drop, color: Colors.blue),
     decimalPlaces: 0,
     isAnimate: true,
     animationDuration: 2000,
+    gaugeOrientation: GaugeOrientation.vertical,
     gaugeStrokeWidth: 5,
     rangeStrokeWidth: 5,
-    majorTickStrokeWidth: 5,
-    minorTickStrokeWidth: 5,
-    actualValueTextStyle: const TextStyle(color: Colors.black, fontSize: 20),
+    majorTickStrokeWidth: 3,
+    minorTickStrokeWidth: 3,
+    actualValueTextStyle: const TextStyle(color: Colors.black, fontSize: 15),
     majorTickValueTextStyle: const TextStyle(color: Colors.black),
 ),
 ```
-![alt_text](images/simple_linear_gauge.png "Simple Linear Gauge")
+![simple linear gauge](https://raw.githubusercontent.com/atsign-foundation/at_gauges/trunk/gifs/simple_linear_gauge_example_app.gif)
 
 For more information, please see the example tab or API documentation listed on pub.dev. 
 
