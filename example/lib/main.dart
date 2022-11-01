@@ -50,7 +50,7 @@ class MyGauges extends StatelessWidget {
             ),
             const ScaleRadialGauge(
               maxValue: 100,
-              actualValue: 50,
+              actualValue: 70,
               // Optional Parameters
               minValue: 0,
               size: 400,

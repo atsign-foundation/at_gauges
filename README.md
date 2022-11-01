@@ -27,9 +27,15 @@ pull requests and to hear about issues. Include the boilerplate language
 below to add some context to @‎platform packages 
 -->
 This open source package is written in Dart, supports Flutter  with the following widgets: 
-- SimpleRadialGauge
-- ScaleRadialGauge
-- SimpleLinearGauge
+  
+##### SimpleRadialGauge
+  ![simple_radial_gauge_gif](https://raw.githubusercontent.com/atsign-foundation/at_gauges/trunk/gifs/simple_radial_gauge.gif)
+
+##### ScaleRadialGauge
+  ![scale_radial_gauge_gif](https://raw.githubusercontent.com/atsign-foundation/at_gauges/trunk/gifs/scale_gauge.gif)
+  
+##### SimpleLinearGauge
+  ![simple_radial_gauge_gif](https://raw.githubusercontent.com/atsign-foundation/at_gauges/trunk/gifs/linear_gauge.gif)
 <!-- - Range radial gauge -->
   <!--- add package features here -->
 
