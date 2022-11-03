@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:at_time_series_chart/utils/at_time_series_painter.dart';
-import 'package:flutter/material.dart';
 
 class AtTimeSeriesLinePainter extends AtTimeSeriesPainter {
   AtTimeSeriesLinePainter({
@@ -9,13 +8,12 @@ class AtTimeSeriesLinePainter extends AtTimeSeriesPainter {
   });
 
   @override
-  void drawChart(Canvas canvas, Size size) {
-    final cPadding = data.chartPadding;
+  void drawChartSeries(Canvas canvas, Size size) {
+    final plotAreaMargin = data.plotAreaMargin;
+    final plotAreaSize = Size(size.width - plotAreaMargin.horizontal,
+        size.height - plotAreaMargin.vertical);
+    final plotAreaOffset = Offset(plotAreaMargin.top, plotAreaMargin.left);
     final chartSeriesColor = data.chartSeriesColor;
-
-    final chartSize =
-        Size(size.width - cPadding.horizontal, size.height - cPadding.vertical);
-    final chartOffset = Offset(cPadding.top, cPadding.left);
 
     ///Draw line
     final positions = <Offset>[];
@@ -28,9 +26,10 @@ class AtTimeSeriesLinePainter extends AtTimeSeriesPainter {
           data.timeSpots[i - data.numOfIntervals + data.timeSpots.length];
 
       final offset = Offset(
-        chartSize.width / data.numOfIntervals * i + chartOffset.dy + 20,
-        (data.maxY - spot.y) / (data.maxY - data.minY) * chartSize.height +
-            chartOffset.dx,
+        plotAreaSize.width / data.numOfIntervals * (i + 0.5) +
+            plotAreaOffset.dy,
+        (data.maxY - spot.y) / (data.maxY - data.minY) * plotAreaSize.height +
+            plotAreaOffset.dx,
       );
 
       positions.add(offset);
@@ -39,66 +38,38 @@ class AtTimeSeriesLinePainter extends AtTimeSeriesPainter {
     final linePaint = Paint()
       ..color = chartSeriesColor
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 2;
+      ..strokeWidth = data.chartSeriesWidth;
 
     if (positions.isNotEmpty) {
-      final _path = _getPoints(positions, size);
+      final path = _getPoints(positions, size);
 
-      canvas.drawPath(_path, linePaint);
+      canvas.drawPath(path, linePaint);
     }
   }
 
   Path _getPoints(List<Offset> points, Size size) {
-    final _points = points;
+    final path = Path();
 
-    final _path = Path();
+    path.moveTo(points[0].dx, points[0].dy);
+    path.lineTo(points.first.dx, points.first.dy);
 
-    _path.moveTo(_points[0].dx, _points[0].dy);
-    _path.lineTo(_points.first.dx, _points.first.dy);
+    for (var i = 0; i < points.length - 1; i++) {
+      final p1 = points[i % points.length];
+      final p2 = points[(i + 1) % points.length];
+      final controlPointX = p1.dx + ((p2.dx - p1.dx) / 2);
+      final mid = (p1 + p2) / 2;
+      final firstLERPValue =
+          lerpDouble(mid.dx, controlPointX, 1) ?? size.height;
+      final secondLERPValue = lerpDouble(mid.dy, p2.dy, 1) ?? size.height;
 
-    for (var i = 0; i < _points.length - 1; i++) {
-      final _p1 = _points[i % _points.length];
-      final _p2 = _points[(i + 1) % _points.length];
-      final controlPointX = _p1.dx + ((_p2.dx - _p1.dx) / 2);
-      final _mid = (_p1 + _p2) / 2;
-      final _firstLerpValue =
-          lerpDouble(_mid.dx, controlPointX, 1) ?? size.height;
-      final _secondLerpValue = lerpDouble(_mid.dy, _p2.dy, 1) ?? size.height;
+      path.cubicTo(
+          controlPointX, p1.dy, firstLERPValue, secondLERPValue, p2.dx, p2.dy);
 
-      _path.cubicTo(controlPointX, _p1.dy, _firstLerpValue, _secondLerpValue,
-          _p2.dx, _p2.dy);
-
-      if (i == _points.length - 2) {
-        _path.lineTo(_p2.dx, _p2.dy);
+      if (i == points.length - 2) {
+        path.lineTo(p2.dx, p2.dy);
       }
     }
 
-    return _path;
-  }
-
-  @override
-  void drawMinorGridLine(
-    Canvas canvas,
-    Size size,
-  ) {
-    final chartPadding = data.chartPadding;
-    final verticalPath = Path();
-
-    for (int i = 0; i < data.numOfIntervals; i++) {
-      verticalPath.moveTo(
-        chartPadding.left +
-            (size.width - chartPadding.horizontal) / data.numOfIntervals * i +
-            colChart,
-        size.height - 31,
-      );
-
-      verticalPath.lineTo(
-        chartPadding.left +
-            (size.width - chartPadding.horizontal) / data.numOfIntervals * i +
-            colChart,
-        0,
-      );
-    }
-    canvas.drawPath(verticalPath, gridLinePaint);
+    return path;
   }
 }

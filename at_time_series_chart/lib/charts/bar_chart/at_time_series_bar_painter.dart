@@ -7,11 +7,11 @@ class AtTimeSeriesBarPainter extends AtTimeSeriesPainter {
   });
 
   @override
-  void drawChart(Canvas canvas, Size size) {
-    final cPadding = data.chartPadding;
-    final chartSize =
-        Size(size.width - cPadding.horizontal, size.height - cPadding.vertical);
-    final chartOffset = Offset(cPadding.top, cPadding.left);
+  void drawChartSeries(Canvas canvas, Size size) {
+    final plotAreaMargin = data.plotAreaMargin;
+    final plotAreaSize = Size(size.width - plotAreaMargin.horizontal,
+        size.height - plotAreaMargin.vertical);
+    final plotAreaOffset = Offset(plotAreaMargin.top, plotAreaMargin.left);
     final chartSeriesColor = data.chartSeriesColor;
 
     ///Draw line
@@ -19,7 +19,7 @@ class AtTimeSeriesBarPainter extends AtTimeSeriesPainter {
       ..color = chartSeriesColor
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.butt
-      ..strokeWidth = 30.0;
+      ..strokeWidth = data.chartSeriesWidth;
 
     for (int i = 0; i < data.numOfIntervals; i++) {
       if (i < data.numOfIntervals - data.timeSpots.length) {
@@ -30,13 +30,18 @@ class AtTimeSeriesBarPainter extends AtTimeSeriesPainter {
           data.timeSpots[i - data.numOfIntervals + data.timeSpots.length];
 
       final offset = Offset(
-          chartSize.width / data.numOfIntervals * i + chartOffset.dy + 20,
-          (data.maxY - spot.y) / (data.maxY - data.minY) * chartSize.height +
-              chartOffset.dx);
+          plotAreaSize.width / data.numOfIntervals * (i + 0.5) +
+              plotAreaOffset.dy,
+          (data.maxY - spot.y) / (data.maxY - data.minY) * plotAreaSize.height +
+              plotAreaOffset.dx);
 
       canvas.drawLine(
         offset,
-        Offset(offset.dx, chartSize.height + cPadding.top - 0.5),
+        Offset(
+            offset.dx,
+            plotAreaSize.height +
+                plotAreaMargin.top -
+                data.plotBorderWidth / 2),
         linePaint,
       );
     }

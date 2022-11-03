@@ -1,15 +1,12 @@
 import 'package:at_time_series_chart/utils/at_time_series_data.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
-import 'package:intl/intl.dart' as intl;
 
-const yMarkCount = 5;
-double colChart = 20;
-double lineWidth = 0.2;
+const double _gridLineWidth = 0.2;
 
-TextStyle textStyleDefault = const TextStyle(
+const TextStyle _defaultTextStyle = TextStyle(
   color: Colors.black,
-  fontSize: 11,
+  fontSize: 14,
 );
 
 class AtTimeSeriesPainter extends CustomPainter {
@@ -21,123 +18,45 @@ class AtTimeSeriesPainter extends CustomPainter {
   }) {
     gridLinePaint = Paint()
       ..color = Colors.grey
-      ..strokeWidth = lineWidth
+      ..strokeWidth = _gridLineWidth
       ..style = PaintingStyle.stroke;
   }
 
   @override
   void paint(Canvas canvas, Size size) {
-    final cPadding = data.chartPadding;
-
-    drawPlotBorder(canvas, size);
-
-    ///Draw X axis mark
-
-    var paint = Paint()
-      ..color = Colors.grey
-      ..strokeWidth = lineWidth
-      ..style = PaintingStyle.stroke;
-
+    //Draw border
+    _drawPlotBorder(canvas, size);
+    //Draw minor grid line
     if (data.drawMinorGridLine) {
-      drawMinorGridLine(canvas, size);
+      _drawMinorGridLine(canvas, size);
     }
-
-    ///Draw X axis title
-    final xAxisTitle = data.xAxisTitle;
-
-    if (data.drawXAxisLabel) {
-      drawXAxisTitle(canvas, size);
-    }
-
-    ///Draw x axis label
-    if (data.numOfIntervals >= data.timeSpots.length) {
-      for (int i = data.timeSpots.length; i > 0; i--) {
-        final value = data.timeSpots[data.timeSpots.length - i].time;
-
-        final timeSpan = TextSpan(
-          text: intl.DateFormat("hh:mm:ss").format(value),
-          style: xAxisTitle?.style ?? textStyleDefault,
-        );
-
-        TextPainter xAxisTp = TextPainter(
-          text: timeSpan,
-          textAlign: TextAlign.left,
-          textDirection: TextDirection.ltr,
-        );
-
-        xAxisTp.layout(
-          minWidth: 0,
-          maxWidth: size.width,
-        );
-
-        xAxisTp.paint(
-            canvas,
-            Offset(
-              size.width -
-                  cPadding.right -
-                  (i - 1) *
-                      (size.width - cPadding.horizontal) /
-                      data.numOfIntervals -
-                  xAxisTp.size.width / 2 +
-                  colChart -
-                  (size.width - cPadding.horizontal) / data.numOfIntervals,
-              size.height - cPadding.bottom + 5,
-            ));
-      }
-    } else {
-      for (int i = 0; i < data.numOfIntervals; i++) {
-        if (i < data.numOfIntervals - data.timeSpots.length) {
-          break;
-        }
-
-        final value = data
-            .timeSpots[i - data.numOfIntervals + data.timeSpots.length].time;
-
-        final timeSpan = TextSpan(
-          text: intl.DateFormat("hh:mm:ss").format(value),
-          style: xAxisTitle?.style ?? textStyleDefault,
-        );
-
-        TextPainter xAxisTp = TextPainter(
-          text: timeSpan,
-          textAlign: TextAlign.left,
-          textDirection: TextDirection.ltr,
-        );
-
-        xAxisTp.layout(
-          minWidth: 0,
-          maxWidth: size.width,
-        );
-
-        xAxisTp.paint(
-            canvas,
-            Offset(
-              cPadding.left +
-                  i * (size.width - cPadding.horizontal) / data.numOfIntervals -
-                  xAxisTp.size.width / 2 +
-                  colChart,
-              size.height - cPadding.bottom + 5,
-            ));
-      }
-    }
-
-    ///Draw y axis mark
+    //Draw major grid line
     if (data.drawMajorGridLine) {
-      drawMajorGridLine(canvas, size);
+      _drawMajorGridLine(canvas, size);
     }
-
-    canvas.save();
-
+    //Draw chart series
+    drawChartSeries(canvas, size);
+    //Draw y axis title
     if (data.drawYAxisTitle) {
-      drawYAnnotate(canvas, size);
+      _drawYAxisTitle(canvas, size);
     }
-
-    drawChart(canvas, size);
+    //Draw x axis title
+    if (data.drawXAxisTitle) {
+      _drawXAxisTitle(canvas, size);
+    }
+    //Draw y axis label
+    if (data.drawYAxisLabel) {
+      _drawYAxisLabel(canvas, size);
+    }
+    //Draw x axis label
+    if (data.drawXAxisLabel) {
+      _drawXAxisLabel(canvas, size);
+    }
   }
 
   /// Draw plot border
-  void drawPlotBorder(Canvas canvas, Size size) {
-    final cPadding = data.chartPadding;
+  void _drawPlotBorder(Canvas canvas, Size size) {
+    final cPadding = data.plotAreaMargin;
     final xPath = Path();
     xPath.moveTo(cPadding.left, cPadding.top);
     xPath.lineTo(cPadding.left, size.height - cPadding.bottom);
@@ -146,71 +65,63 @@ class AtTimeSeriesPainter extends CustomPainter {
     xPath.lineTo(cPadding.left, cPadding.top);
 
     final xPaint = Paint()
-      ..color = Colors.black
+      ..color = data.plotBorderColor
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 1;
+      ..strokeWidth = data.plotBorderWidth;
 
     canvas.drawPath(xPath, xPaint);
   }
 
-  void drawTitle(Canvas canvas, Size size) {}
+  void drawChartSeries(Canvas canvas, Size size) {}
 
-  void drawChart(Canvas canvas, Size size) {}
+  void _drawMinorGridLine(Canvas canvas, Size size) {
+    final plotAreaMargin = data.plotAreaMargin;
+    final plotAreaSize = Size(size.width - plotAreaMargin.horizontal,
+        size.height - plotAreaMargin.vertical);
+    final plotAreaOffset = Offset(plotAreaMargin.top, plotAreaMargin.left);
+    final verticalPath = Path();
 
-  void drawMinorGridLine(
-    Canvas canvas,
-    Size size,
-  ) {}
+    for (int i = 0; i < data.numOfIntervals; i++) {
+      verticalPath.moveTo(
+        plotAreaSize.width / data.numOfIntervals * (i + 0.5) +
+            plotAreaOffset.dy,
+        size.height - plotAreaMargin.bottom - data.plotBorderWidth,
+      );
 
-  void drawMajorGridLine(
-    Canvas canvas,
-    Size size,
-  ) {
+      verticalPath.lineTo(
+        plotAreaSize.width / data.numOfIntervals * (i + 0.5) +
+            plotAreaOffset.dy,
+        0,
+      );
+    }
+    canvas.drawPath(verticalPath, gridLinePaint);
+  }
+
+  void _drawMajorGridLine(Canvas canvas, Size size) {
     final yPath = Path();
-    final cPadding = data.chartPadding;
+    final cPadding = data.plotAreaMargin;
 
-    for (int i = 1; i < yMarkCount; i++) {
-      yPath.moveTo(cPadding.left + lineWidth,
-          cPadding.top + (size.height - cPadding.vertical) / yMarkCount * i);
-      yPath.lineTo((size.width - cPadding.right),
-          cPadding.top + (size.height - cPadding.vertical) / yMarkCount * i);
+    for (int i = 1; i < data.numOfYLabel; i++) {
+      yPath.moveTo(
+          cPadding.left + _gridLineWidth,
+          cPadding.top +
+              (size.height - cPadding.vertical) / data.numOfYLabel * i);
+      yPath.lineTo(
+          (size.width - cPadding.right),
+          cPadding.top +
+              (size.height - cPadding.vertical) / data.numOfYLabel * i);
     }
 
     canvas.drawPath(yPath, gridLinePaint);
   }
 
-  void drawXAxisTitle(
-    Canvas canvas,
-    Size size,
-  ) {
-    final xAxisTitle = data.xAxisTitle;
-    final cPadding = data.chartPadding;
-
-    if (xAxisTitle != null) {
-      TextPainter xTp = TextPainter(
-        text: TextSpan(text: xAxisTitle.data, style: xAxisTitle.style),
-        textAlign: TextAlign.left,
-        textDirection: TextDirection.ltr,
-      );
-
-      xTp.layout(
-        minWidth: 0,
-        maxWidth: size.width,
-      );
-      xTp.paint(
-          canvas,
-          Offset((size.width + cPadding.right) / 2 - xTp.size.width / 2,
-              size.height - (xAxisTitle.style?.fontSize ?? 14) - 2));
-    }
-  }
-
-  void drawYAnnotate(Canvas canvas, Size size) {
+  void _drawYAxisTitle(Canvas canvas, Size size) {
+    canvas.save();
     canvas.rotate(pi / 2);
-
-    final cPadding = data.chartPadding;
+    final cPadding = data.plotAreaMargin;
     final ySpan = TextSpan(
       text: data.yAxisTitle?.data,
-      style: data.yAxisTitle?.style ?? textStyleDefault,
+      style: data.yAxisTitle?.style ?? _defaultTextStyle,
     );
 
     if (data.drawYAxisLabel) {
@@ -231,15 +142,40 @@ class AtTimeSeriesPainter extends CustomPainter {
             -(data.yAxisTitle?.style?.fontSize ?? 14) - 5),
       );
     }
-
     canvas.restore();
+  }
+
+  void _drawXAxisTitle(Canvas canvas, Size size) {
+    final xAxisTitle = data.xAxisTitle;
+    final cPadding = data.plotAreaMargin;
+
+    if (xAxisTitle != null) {
+      TextPainter xTp = TextPainter(
+        text: TextSpan(text: xAxisTitle.data, style: xAxisTitle.style),
+        textAlign: TextAlign.left,
+        textDirection: TextDirection.ltr,
+      );
+
+      xTp.layout(
+        minWidth: 0,
+        maxWidth: size.width,
+      );
+      xTp.paint(
+          canvas,
+          Offset((size.width + cPadding.right) / 2 - xTp.size.width / 2,
+              size.height - (xAxisTitle.style?.fontSize ?? 14) - 2));
+    }
+  }
+
+  void _drawYAxisLabel(Canvas canvas, Size size) {
+    final plotAreaMargin = data.plotAreaMargin;
 
     ///Draw y axis label
-    for (int i = 0; i <= yMarkCount; i++) {
-      final value = data.minY + i * (data.maxY - data.minY) / yMarkCount;
+    for (int i = 0; i <= data.numOfYLabel; i++) {
+      final value = data.minY + i * (data.maxY - data.minY) / data.numOfYLabel;
       final span = TextSpan(
-        text: value.toStringAsFixed(0),
-        style: data.yAxisTitle?.style ?? textStyleDefault,
+        text: data.yLabelFormat?.call(value) ?? value.toStringAsFixed(0),
+        style: data.yAxisLabelStyle ?? _defaultTextStyle,
       );
       TextPainter yAxisTp = TextPainter(
         text: span,
@@ -254,11 +190,57 @@ class AtTimeSeriesPainter extends CustomPainter {
       yAxisTp.paint(
           canvas,
           Offset(
-              cPadding.left - yAxisTp.size.width - 3,
-              (size.height - cPadding.bottom) -
+              plotAreaMargin.left - yAxisTp.size.width - 3,
+              (size.height - plotAreaMargin.bottom) -
                   yAxisTp.size.height / 2 -
-                  i * (size.height - cPadding.vertical) / yMarkCount));
+                  i *
+                      (size.height - plotAreaMargin.vertical) /
+                      data.numOfYLabel));
     }
+  }
+
+  void _drawXAxisLabel(Canvas canvas, Size size) {
+    final plotAreaMargin = data.plotAreaMargin;
+    final plotAreaSize = Size(size.width - plotAreaMargin.horizontal,
+        size.height - plotAreaMargin.vertical);
+    final plotAreaOffset = Offset(plotAreaMargin.top, plotAreaMargin.left);
+
+    ///Draw x axis label
+    for (int i = 0; i < data.numOfIntervals; i++) {
+      if (i < data.numOfIntervals - data.timeSpots.length) {
+        continue;
+      }
+      final position = i - data.numOfIntervals + data.timeSpots.length;
+      final value = data.timeSpots[position];
+
+      final timeSpan = TextSpan(
+        text: data.xLabelFormat?.call(value, position) ??
+            "${value.time.hour}:${value.time.minute}:${value.time.second}",
+        style: data.xAxisLabelStyle ?? _defaultTextStyle,
+      );
+
+      TextPainter xAxisTp = TextPainter(
+        text: timeSpan,
+        textAlign: TextAlign.left,
+        textDirection: TextDirection.ltr,
+      );
+
+      xAxisTp.layout(
+        minWidth: 0,
+        maxWidth: size.width,
+      );
+
+      xAxisTp.paint(
+        canvas,
+        Offset(
+          plotAreaSize.width / data.numOfIntervals * (i + 0.5) +
+              plotAreaOffset.dy -
+              xAxisTp.size.width / 2,
+          size.height - plotAreaMargin.bottom + 5,
+        ),
+      );
+    }
+    // }
   }
 
   @override
