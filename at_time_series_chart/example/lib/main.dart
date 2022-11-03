@@ -43,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
       timeSpots: [],
       numOfIntervals: 5,
       intervalTimeInSeconds: 0.1,
-      showLabelVertical: false,
+      drawYAxisTitle: false,
       minY: 0,
       maxY: 100,
       chartPadding: const EdgeInsets.only(left: 5, bottom: 30, right: 5),

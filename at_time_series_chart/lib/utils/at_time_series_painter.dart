@@ -3,34 +3,28 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:intl/intl.dart' as intl;
 
+const yMarkCount = 5;
+double colChart = 20;
+double lineWidth = 0.2;
+
 class AtTimeSeriesPainter extends CustomPainter {
   final AtTimeSeriesData data;
+  late Paint gridLinePaint;
 
   AtTimeSeriesPainter({
     required this.data,
-  });
+  }) {
+    gridLinePaint = Paint()
+      ..color = Colors.grey
+      ..strokeWidth = lineWidth
+      ..style = PaintingStyle.stroke;
+  }
 
   @override
   void paint(Canvas canvas, Size size) {
     final cPadding = data.chartPadding;
 
-    double colChart = 20;
-    double lineWidth = 0.2;
-
-    ///Draw chart border
-    final xPath = Path();
-    xPath.moveTo(cPadding.left, cPadding.top);
-    xPath.lineTo(cPadding.left, size.height - cPadding.bottom);
-    xPath.lineTo(size.width - cPadding.right, size.height - cPadding.bottom);
-    xPath.lineTo(size.width - cPadding.right, cPadding.top);
-    xPath.lineTo(cPadding.left, cPadding.top);
-
-    final xPaint = Paint()
-      ..color = Colors.black
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1;
-
-    canvas.drawPath(xPath, xPaint);
+    drawPlotBorder(canvas, size);
 
     ///Draw X axis mark
 
@@ -39,7 +33,7 @@ class AtTimeSeriesPainter extends CustomPainter {
       ..strokeWidth = lineWidth
       ..style = PaintingStyle.stroke;
 
-    drawMinorGridLine(canvas, size, paint, colChart, cPadding);
+    drawMinorGridLine(canvas, size);
 
     ///Draw X axis title
     final xAxisTitle = data.xAxisTitle;
@@ -135,7 +129,6 @@ class AtTimeSeriesPainter extends CustomPainter {
 
     ///Draw y axis mark
     final yPath = Path();
-    const yMarkCount = 5;
 
     for (int i = 1; i < yMarkCount; i++) {
       yPath.moveTo(cPadding.left + lineWidth,
@@ -149,13 +142,31 @@ class AtTimeSeriesPainter extends CustomPainter {
 
     canvas.rotate(pi / 2);
 
-    if (data.showLabelVertical) {
-      drawLabelVertical(canvas, size, cPadding, yMarkCount);
+    if (data.drawYAxisTitle) {
+      drawYAnnotate(canvas, size);
     }
 
     canvas.restore();
 
     drawChart(canvas, size);
+  }
+
+  /// Draw plot border
+  void drawPlotBorder(Canvas canvas, Size size) {
+    final cPadding = data.chartPadding;
+    final xPath = Path();
+    xPath.moveTo(cPadding.left, cPadding.top);
+    xPath.lineTo(cPadding.left, size.height - cPadding.bottom);
+    xPath.lineTo(size.width - cPadding.right, size.height - cPadding.bottom);
+    xPath.lineTo(size.width - cPadding.right, cPadding.top);
+    xPath.lineTo(cPadding.left, cPadding.top);
+
+    final xPaint = Paint()
+      ..color = Colors.black
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1;
+
+    canvas.drawPath(xPath, xPaint);
   }
 
   void drawTitle(Canvas canvas, Size size) {}
@@ -165,17 +176,10 @@ class AtTimeSeriesPainter extends CustomPainter {
   void drawMinorGridLine(
     Canvas canvas,
     Size size,
-    Paint paint,
-    double colChart,
-    EdgeInsets chartPadding,
   ) {}
 
-  void drawLabelVertical(
-    Canvas canvas,
-    Size size,
-    EdgeInsets chartPadding,
-    int yMarkCount,
-  ) {
+  void drawYAnnotate(Canvas canvas, Size size) {
+    final cPadding = data.chartPadding;
     final ySpan = TextSpan(
       text: data.yAxisTitle?.data,
       style: data.yAxisTitle?.style,
@@ -194,7 +198,7 @@ class AtTimeSeriesPainter extends CustomPainter {
 
     yTp.paint(
       canvas,
-      Offset((size.height - chartPadding.vertical) / 2 - yTp.size.width / 2,
+      Offset((size.height - cPadding.vertical) / 2 - yTp.size.width / 2,
           -(data.yAxisTitle?.style?.fontSize ?? 14) - 5),
     );
 
@@ -218,10 +222,10 @@ class AtTimeSeriesPainter extends CustomPainter {
       yAxisTp.paint(
           canvas,
           Offset(
-              chartPadding.left - yAxisTp.size.width - 3,
-              (size.height - chartPadding.bottom) -
+              cPadding.left - yAxisTp.size.width - 3,
+              (size.height - cPadding.bottom) -
                   yAxisTp.size.height / 2 -
-                  i * (size.height - chartPadding.vertical) / yMarkCount));
+                  i * (size.height - cPadding.vertical) / yMarkCount));
     }
   }
 

@@ -78,10 +78,8 @@ class AtTimeSeriesLinePainter extends AtTimeSeriesPainter {
   void drawMinorGridLine(
     Canvas canvas,
     Size size,
-    Paint paint,
-    double colChart,
-    EdgeInsets chartPadding,
   ) {
+    final chartPadding = data.chartPadding;
     final verticalPath = Path();
 
     for (int i = 0; i < data.numOfIntervals; i++) {
@@ -99,8 +97,6 @@ class AtTimeSeriesLinePainter extends AtTimeSeriesPainter {
         0,
       );
     }
-
-    canvas.drawPath(verticalPath, paint);
-    super.drawMinorGridLine(canvas, size, paint, colChart, chartPadding);
+    canvas.drawPath(verticalPath, gridLinePaint);
   }
 }
