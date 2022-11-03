@@ -41,21 +41,36 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     data = AtTimeSeriesData(
       timeSpots: [],
-      numOfIntervals: 100,
+      numOfIntervals: 5,
       intervalTimeInSeconds: 0.1,
-      minY: 10,
+      showLabelVertical: false,
+      minY: 0,
       maxY: 100,
-      backgroundColor: Colors.green,
-      xAxisTitle: const Text("abc", style: TextStyle(color: Colors.black)),
-      yAxisTitle: const Text("xyz", style: TextStyle(color: Colors.black)),
+      chartPadding: const EdgeInsets.only(left: 5, bottom: 30, right: 5),
+      // backgroundColor: Colors.green,
+      xAxisTitle: const Text(
+        "abc",
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 11,
+        ),
+      ),
+      yAxisTitle: const Text(
+        "xyz hjk hjk",
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 11,
+        ),
+      ),
     );
     _initialSetup();
   }
 
   void _initialSetup() {
-    Timer.periodic(const Duration(milliseconds: 1000), (timer) {
-      data.timeSpots.add(AtTimeSpot(DateTime.now(), Random().nextInt(90) + 10));
-      if (!mounted) return;
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      data.timeSpots.add(
+        AtTimeSpot(DateTime.now(), Random().nextInt(70) + 30),
+      );
       setState(() {});
     });
   }
@@ -66,17 +81,35 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          AtTimeSeriesLineChart(
-            data: data,
-          ),
-          const SizedBox(height: 50),
-          AtTimeSeriesBarChart(
-            data: data,
-          ),
-        ],
+      body: SafeArea(
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              color: Colors.blue,
+              height: 20,
+              width: double.infinity,
+            ),
+            Container(
+              color: Colors.red,
+              // width: 300,
+              // height: 400,
+              child: AtTimeSeriesLineChart(
+                data: data,
+              ),
+            ),
+            Container(
+              color: Colors.blue,
+              height: 20,
+              width: double.infinity,
+            ),
+            // const SizedBox(height: 50),
+            AtTimeSeriesBarChart(
+              data: data,
+            ),
+          ],
+        ),
       ),
     );
   }

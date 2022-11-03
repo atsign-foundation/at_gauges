@@ -9,6 +9,7 @@ class AtTimeSeriesData {
   final EdgeInsets chartPadding;
   final Text? xAxisTitle;
   final Text? yAxisTitle;
+  final bool showLabelVertical;
 
   /// A background color which is drawn behind th chart.
   Color backgroundColor;
@@ -23,6 +24,7 @@ class AtTimeSeriesData {
     this.chartPadding = const EdgeInsets.only(left: 40, bottom: 40),
     this.xAxisTitle,
     this.yAxisTitle,
+    this.showLabelVertical = true,
   });
 
   void insertSpot({required AtTimeSpot spot}) {

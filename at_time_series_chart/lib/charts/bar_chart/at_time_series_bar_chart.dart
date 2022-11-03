@@ -15,6 +15,7 @@ class AtTimeSeriesBarChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
+      padding: const EdgeInsets.only(top: 8),
       constraints: const BoxConstraints(
         minHeight: 200,
       ),
@@ -22,7 +23,9 @@ class AtTimeSeriesBarChart extends StatelessWidget {
         color: data.backgroundColor,
       ),
       child: CustomPaint(
-        painter: AtTimeSeriesBarPainter(data: data),
+        painter: AtTimeSeriesBarPainter(
+          data: data,
+        ),
       ),
     );
   }
