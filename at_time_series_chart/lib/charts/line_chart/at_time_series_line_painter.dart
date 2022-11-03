@@ -11,6 +11,8 @@ class AtTimeSeriesLinePainter extends AtTimeSeriesPainter {
   @override
   void drawChart(Canvas canvas, Size size) {
     final cPadding = data.chartPadding;
+    final chartSeriesColor = data.chartSeriesColor;
+
     final chartSize =
         Size(size.width - cPadding.horizontal, size.height - cPadding.vertical);
     final chartOffset = Offset(cPadding.top, cPadding.left);
@@ -35,7 +37,7 @@ class AtTimeSeriesLinePainter extends AtTimeSeriesPainter {
     }
 
     final linePaint = Paint()
-      ..color = Colors.blue
+      ..color = chartSeriesColor
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2;
 

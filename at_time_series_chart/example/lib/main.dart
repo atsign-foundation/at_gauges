@@ -43,11 +43,12 @@ class _MyHomePageState extends State<MyHomePage> {
       timeSpots: [],
       numOfIntervals: 5,
       intervalTimeInSeconds: 0.1,
-      drawYAxisTitle: false,
+      drawYAxisTitle: true,
       minY: 0,
       maxY: 100,
-      chartPadding: const EdgeInsets.only(left: 5, bottom: 30, right: 5),
-      // backgroundColor: Colors.green,
+      chartPadding: const EdgeInsets.only(left: 35, bottom: 30, right: 30),
+      chartSeriesColor: Colors.orange,
+      backgroundColor: Colors.white,
       xAxisTitle: const Text(
         "abc",
         style: TextStyle(
@@ -56,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       yAxisTitle: const Text(
-        "xyz hjk hjk",
+        "xyz",
         style: TextStyle(
           color: Colors.black,
           fontSize: 11,

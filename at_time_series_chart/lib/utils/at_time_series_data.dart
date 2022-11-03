@@ -43,7 +43,7 @@ class AtTimeSeriesData {
     this.drawYAxisLabel = true,
     this.drawXAxisTitle = true,
     this.drawXAxisLabel = true,
-    this.chartSeriesColor = Colors.black,
+    this.chartSeriesColor = Colors.blue,
     this.backgroundColor = Colors.white,
     this.yLabelFormat,
     this.xLabelFormat,

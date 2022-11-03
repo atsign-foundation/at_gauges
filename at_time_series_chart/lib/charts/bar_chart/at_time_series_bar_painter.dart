@@ -12,10 +12,11 @@ class AtTimeSeriesBarPainter extends AtTimeSeriesPainter {
     final chartSize =
         Size(size.width - cPadding.horizontal, size.height - cPadding.vertical);
     final chartOffset = Offset(cPadding.top, cPadding.left);
+    final chartSeriesColor = data.chartSeriesColor;
 
     ///Draw line
     final linePaint = Paint()
-      ..color = Colors.blue
+      ..color = chartSeriesColor
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.butt
       ..strokeWidth = 30.0;
