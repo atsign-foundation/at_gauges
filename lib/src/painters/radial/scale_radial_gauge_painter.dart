@@ -27,9 +27,9 @@ class ScaleRadialGaugePainter extends CustomPainter {
 
   List<double> getScale(double divider) {
     List<double> scale = [];
-    final double interval = maxValue / (divider - 1);
+    final double interval = (maxValue - minValue) / (divider - 1);
     for (double i = 0; i < divider; i++) {
-      scale.add((i * interval));
+      scale.add((minValue + i * interval));
     }
     scale.removeWhere((element) => element < minValue);
 
@@ -147,10 +147,10 @@ class ScaleRadialGaugePainter extends CustomPainter {
           style: const TextStyle(color: Colors.black),
           children: [TextSpan(text: unit.text == '' ? '' : ' '), unit],
           text: RadialHelper.sweepAngleRadianToActualValue(
-                  sweepAngle: sweepAngle,
-                  maxValue: maxValue,
-                  minValue: minValue,
-                  maxDegrees: 300)
+              sweepAngle: sweepAngle,
+              maxValue: maxValue,
+              minValue: minValue,
+              maxDegrees: 300)
               .toStringAsFixed(decimalPlaces),
         ),
         textDirection: TextDirection.ltr)
