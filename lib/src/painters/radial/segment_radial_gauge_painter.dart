@@ -151,8 +151,8 @@ class SegmentRadialGaugePainter extends CustomPainter {
       ..style = PaintingStyle.fill;
 
     var needleEndPointOffset = Offset(
-      (center.dx) + (radius - 15) * cos(pi / 1.5 + sweepAngle),
-      (center.dx) + (radius - 15) * sin(pi / 1.5 + sweepAngle),
+      (center.dx) + (radius - 15) * cos(startAngle + sweepAngle),
+      (center.dy) + (radius - 15) * sin(startAngle + sweepAngle),
     );
 
     canvas.drawLine(center, needleEndPointOffset, needlePaint);

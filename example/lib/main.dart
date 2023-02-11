@@ -14,7 +14,9 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
-  double _maxValue = 50;
+  double _value = 50;
+  final double _minValue = -200;
+  final double _maxValue = 200;
 
   Widget myGauges() {
     return Scaffold(
@@ -147,10 +149,10 @@ class _MyAppState extends State<MyApp> {
               ],
             ),
             SegmentRadialGauge(
-              maxValue: 12,
-              actualValue: _maxValue,
+              maxValue: _maxValue,
+              actualValue: _value,
               // Optional Parameters
-              minValue: -4,
+              minValue: _minValue,
               size: 250,
               title: const Text('Zone Radial Gauge'),
               titlePosition: TitlePosition.top,
@@ -166,7 +168,7 @@ class _MyAppState extends State<MyApp> {
                   color: Colors.cyan,
                 ),
               ),
-              isPointer: true,
+              isPointer: false,
               titleText: "Title",
               title2Text: "Title2",
               segmentStartAngle: 135,
@@ -193,12 +195,12 @@ class _MyAppState extends State<MyApp> {
               ],
             ),
             Slider(
-              value: _maxValue,
-              min: -290,
-              max: 90,
+              value: _value,
+              min: _minValue + 10,
+              max: _maxValue - 10,
               onChanged: (value) {
                 setState(() {
-                  _maxValue = value;
+                  _value = value;
                 });
               },
             ),
