@@ -86,10 +86,16 @@ class _SimpleLinearGaugeState extends State<SimpleLinearGauge>
   }
 
   @override
-  Widget build(BuildContext context) {
+  void didUpdateWidget(covariant SimpleLinearGauge oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
     if (animationController.value != widget.actualValue) {
       animationController.animateTo(widget.actualValue);
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return CustomPaint(
       child: SizedBox.expand(),
       painter: SimpleLinearGaugePainter(
