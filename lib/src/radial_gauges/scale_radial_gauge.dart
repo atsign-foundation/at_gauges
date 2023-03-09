@@ -113,24 +113,27 @@ class _ScaleRadialGaugeState extends State<ScaleRadialGauge>
   }
 
   @override
-  Widget build(BuildContext context) {
-    if (animationController.value !=
-        RadialHelper.actualValueToSweepAngleRadian(
-            actualValue: widget.actualValue,
-            maxValue: widget.maxValue,
-            minValue: widget.minValue,
-            maxDegrees: 300)) {
-      animationController.animateTo(
-          RadialHelper.actualValueToSweepAngleRadian(
-              actualValue: widget.actualValue,
-              maxValue: widget.maxValue,
-              minValue: widget.minValue,
-              maxDegrees: 300),
-          duration: RadialHelper.getDuration(
-              isAnimate: widget.isAnimate,
-              userMilliseconds: widget.animationDuration));
-    }
+  void didUpdateWidget(covariant ScaleRadialGauge oldWidget) {
+    super.didUpdateWidget(oldWidget);
 
+    final sweepAngleRadian = RadialHelper.actualValueToSweepAngleRadian(
+      actualValue: widget.actualValue,
+      maxValue: widget.maxValue,
+      minValue: widget.minValue,
+      maxDegrees: 300,
+    );
+    if (animationController.value != sweepAngleRadian) {
+      animationController.animateTo(
+        sweepAngleRadian,
+        duration: RadialHelper.getDuration(
+            isAnimate: widget.isAnimate,
+            userMilliseconds: widget.animationDuration),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return SizedBox(
       width: widget.size,
       height: widget.size,

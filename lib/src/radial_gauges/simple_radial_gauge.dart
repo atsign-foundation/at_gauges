@@ -116,22 +116,22 @@ class _SimpleRadialGaugeState extends State<SimpleRadialGauge>
   }
 
   @override
-  Widget build(BuildContext context) {
-    if (animationController.value !=
-        RadialHelper.actualValueToSweepAngleRadian(
-            minValue: widget.minValue,
-            actualValue: widget.actualValue,
-            maxValue: widget.maxValue)) {
-      animationController.animateTo(
-          RadialHelper.actualValueToSweepAngleRadian(
-              minValue: widget.minValue,
-              actualValue: widget.actualValue,
-              maxValue: widget.maxValue),
-          duration: RadialHelper.getDuration(
-              isAnimate: widget.isAnimate,
-              userMilliseconds: widget.animationDuration));
-    }
+  void didUpdateWidget(covariant SimpleRadialGauge oldWidget) {
+    super.didUpdateWidget(oldWidget);
 
+    final sweepAngleRadian = RadialHelper.actualValueToSweepAngleRadian(
+      minValue: widget.minValue,
+      actualValue: widget.actualValue,
+      maxValue: widget.maxValue,
+    );
+
+    if (animationController.value != sweepAngleRadian) {
+      animationController.animateTo(sweepAngleRadian);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return SizedBox(
       width: widget.size,
       height: widget.size,
