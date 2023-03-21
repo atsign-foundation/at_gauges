@@ -24,12 +24,12 @@ class ScaleRadialGauge extends StatefulWidget {
     this.unit = const TextSpan(text: ''),
     Key? key,
   })  : assert(actualValue <= maxValue,
-        'actualValue must be less than or equal to maxValue'),
+            'actualValue must be less than or equal to maxValue'),
         assert(size >= 140, 'size must be greater than 75'),
         assert(actualValue >= minValue,
-        'actualValue must be greater than or equal to minValue'),
+            'actualValue must be greater than or equal to minValue'),
         assert(minValue < maxValue,
-        'maxValue must be greater than minValue'),
+            'maxValue must be greater than minValue'),
         super(key: key);
 
   /// Sets the minimum value of the gauge.
@@ -142,12 +142,12 @@ class _ScaleRadialGaugeState extends State<ScaleRadialGauge>
             children: [
               widget.titlePosition == TitlePosition.top
                   ? SizedBox(
-                height: 20,
-                child: widget.title,
-              )
+                      height: 20,
+                      child: widget.title,
+                    )
                   : const SizedBox(
-                height: 20,
-              ),
+                      height: 20,
+                    ),
               SizedBox(
                 height: 200,
                 width: 200,
@@ -172,12 +172,12 @@ class _ScaleRadialGaugeState extends State<ScaleRadialGauge>
               ),
               widget.titlePosition == TitlePosition.bottom
                   ? SizedBox(
-                height: 30,
-                child: widget.title,
-              )
+                      height: 30,
+                      child: widget.title,
+                    )
                   : const SizedBox(
-                height: 20,
-              )
+                      height: 20,
+                    )
             ],
           ),
         ),

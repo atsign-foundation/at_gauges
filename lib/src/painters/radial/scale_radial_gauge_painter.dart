@@ -147,10 +147,10 @@ class ScaleRadialGaugePainter extends CustomPainter {
           style: const TextStyle(color: Colors.black),
           children: [TextSpan(text: unit.text == '' ? '' : ' '), unit],
           text: RadialHelper.sweepAngleRadianToActualValue(
-                sweepAngle: sweepAngle,
-                maxValue: maxValue,
-                minValue: minValue,
-                maxDegrees: 300)
+                  sweepAngle: sweepAngle,
+                  maxValue: maxValue,
+                  minValue: minValue,
+                  maxDegrees: 300)
               .toStringAsFixed(decimalPlaces),
         ),
         textDirection: TextDirection.ltr)
