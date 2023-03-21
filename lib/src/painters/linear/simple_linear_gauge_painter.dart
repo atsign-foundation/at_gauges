@@ -19,6 +19,8 @@ class SimpleLinearGaugePainter extends LinearCustomPainter {
     required double minorTickStrokeWidth,
     required TextStyle actualValueTextStyle,
     required TextStyle majorTicksValueTextStyle,
+    required int majorTicksDecimalPlace,
+    required String unitString,
   }) : super(
           minValue: minValue,
           maxValue: maxValue,
@@ -36,6 +38,8 @@ class SimpleLinearGaugePainter extends LinearCustomPainter {
           actualValueTextStyle: actualValueTextStyle,
           majorTicksValueTextStyle: majorTicksValueTextStyle,
           gaugeOrientation: gaugeOrientation,
+          majorTicksDecimalPlace: majorTicksDecimalPlace,
+          unitString: unitString,
         );
 
   @override
