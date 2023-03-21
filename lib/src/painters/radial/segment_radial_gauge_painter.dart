@@ -182,13 +182,23 @@ class SegmentRadialGaugePainter extends CustomPainter {
     for (var value in valueTextList) {
       var valueLength = value.toStringAsFixed(decimalPlaces).length;
       bool needValueOffset = false;
-      double valueRnd = double.tryParse(value.toStringAsFixed(0)) ?? 0;
+      // double valueRnd = double.tryParse(value.toStringAsFixed(0)) ?? 0;
+      double valueRnd = 0;
+      int valueDP = 0;
+      for (valueDP; valueDP < 3; valueDP++) {
+        valueRnd = double.tryParse(value.toStringAsFixed(valueDP)) ?? 0;
+        // print("valueRnd: $valueRnd");
+        // print("value: $value");
+        if (valueRnd == value) {
+          break;
+        }
+      }
       double maxValueOffset = 7.5;
       if (valueRnd != value) {
         needValueOffset = true;
         maxValueOffset = 10;
       } else {
-        valueLength = value.toStringAsFixed(0).length;
+        valueLength = value.toStringAsFixed(valueDP).length;
       }
 
       final TextPainter valueTextPainter = TextPainter(
@@ -197,7 +207,7 @@ class SegmentRadialGaugePainter extends CustomPainter {
             color: Colors.black,
             fontSize: 12 - valueFontSizeOffset,
           ),
-          text: !needValueOffset ? value.toStringAsFixed(0)
+          text: !needValueOffset ? value.toStringAsFixed(valueDP)
               : value.toStringAsFixed(decimalPlaces),
         ),
         textDirection: TextDirection.ltr,
@@ -223,9 +233,16 @@ class SegmentRadialGaugePainter extends CustomPainter {
 
         valueTextPainter.paint(canvas, minValueScaleOffset);
       } else if (value == halfOfMinMaxValue) {
+        double valueLengthOffset = 0;
+        if (valueLength < 6) {
+          valueLengthOffset = valueLength.toDouble();
+        } else {
+          valueLengthOffset = valueLength.toDouble() / 3;
+        }
+
         var halfValueScaleOffset = Offset(
             (center.dx - ((value != 0) ? valueLength : 0) *
-                ((valueLength != 3) ? (valueLength / 5).ceil() : 2.5) - 2),
+                ((valueLength != 3) ? (valueLength / 5).ceil() : 2.5) - (2 + valueLengthOffset)),
             (center.dy) +
                 (radius - scaleSweepAngle - 30) *
                     sin(startAngle + scaleSweepAngle)

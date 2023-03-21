@@ -34,20 +34,20 @@ class SegmentRadialGauge extends StatefulWidget {
     Key? key,
   }) :
         assert(actualValue <= maxValue,
-        'actualValue must be less than or equal to maxValue'),
+            'actualValue must be less than or equal to maxValue'),
         assert(size >= 140, 'size must be greater than 75'),
         assert(actualValue >= minValue,
-        'actualValue must be greater than or equal to minValue'),
+            'actualValue must be greater than or equal to minValue'),
         assert(minValue < maxValue,
-        'maxValue must be greater than minValue'),
+            'maxValue must be greater than minValue'),
         assert(segmentStartAngle > 0,
-        'segmentStartAngle must be greater than 0'),
+            'segmentStartAngle must be greater than 0'),
         assert(segmentSweepAngle > 0,
-        'segmentSweepAngle must be greater than 0'),
+            'segmentSweepAngle must be greater than 0'),
         assert(segmentMainNo > 0,
-        'segmentMainNo must be greater than 0'),
+            'segmentMainNo must be greater than 0'),
         assert(segmentSubNo > 0,
-        'segmentSubNo must be greater than 0'),
+            'segmentSubNo must be greater than 0'),
         super(key: key);
 
   /// Sets the minimum value of the gauge.
@@ -183,57 +183,55 @@ class _SegmentRadialGaugeState extends State<SegmentRadialGauge>
       width: widget.size,
       height: widget.size,
       child: FittedBox(
-        child: SizedBox(
-          child: Column(
-            children: [
-              widget.titlePosition == TitlePosition.top
-                  ? SizedBox(
-                height: 20,
-                child: widget.title,
-              )
-                  : const SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                height: 200,
-                width: 200,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CustomPaint(
-                    painter: SegmentRadialGaugePainter(
-                      sweepAngle: animationController.value,
-                      pointerColor: widget.pointerColor,
-                      needleColor: widget.needleColor,
-                      minValue: widget.minValue,
-                      maxValue: widget.maxValue,
-                      actualValue: widget.actualValue,
-                      decimalPlaces: widget.decimalPlaces,
-                      unit: widget.unit,
-                      isPointer: widget.isPointer,
-                      titleText: widget.titleText,
-                      title2Text: widget.title2Text,
-                      segmentStartAngle: widget.segmentStartAngle,
-                      segmentSweepAngle: widget.segmentSweepAngle,
-                      segmentMainNo: widget.segmentMainNo,
-                      segmentSubNo: widget.segmentSubNo,
-                      segmentList: widget.segmentList,
-                    ),
+        child: Column(
+          children: [
+            widget.titlePosition == TitlePosition.top
+                ? SizedBox(
+              height: 20,
+              child: widget.title,
+            )
+                : const SizedBox(
+              height: 20,
+            ),
+            SizedBox(
+              height: 200,
+              width: 200,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CustomPaint(
+                  painter: SegmentRadialGaugePainter(
+                    sweepAngle: animationController.value,
+                    pointerColor: widget.pointerColor,
+                    needleColor: widget.needleColor,
+                    minValue: widget.minValue,
+                    maxValue: widget.maxValue,
+                    actualValue: widget.actualValue,
+                    decimalPlaces: widget.decimalPlaces,
+                    unit: widget.unit,
+                    isPointer: widget.isPointer,
+                    titleText: widget.titleText,
+                    title2Text: widget.title2Text,
+                    segmentStartAngle: widget.segmentStartAngle,
+                    segmentSweepAngle: widget.segmentSweepAngle,
+                    segmentMainNo: widget.segmentMainNo,
+                    segmentSubNo: widget.segmentSubNo,
+                    segmentList: widget.segmentList,
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              widget.titlePosition == TitlePosition.bottom
-                  ? SizedBox(
-                height: 30,
-                child: widget.title,
-              )
-                  : const SizedBox(
-                height: 20,
-              )
-            ],
-          ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            widget.titlePosition == TitlePosition.bottom
+                ? SizedBox(
+              height: 30,
+              child: widget.title,
+            )
+                : const SizedBox(
+              height: 20,
+            )
+          ],
         ),
       ),
     );
