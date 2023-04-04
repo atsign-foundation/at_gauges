@@ -21,6 +21,8 @@ But also don't assume that they're a novice.
 -->
 The at_gauges package is for Flutter developers who want to build beautiful and customizable gauges.
 
+Sadly this package has been migrated to the [at_viz package](https://pub.dev/packages/at_viz) as such, at_gauges is now depreciated.
+
 <!---
 Give some context and state the intent - we welcome contributions - we want
 pull requests and to hear about issues. Include the boilerplate language

@@ -3,7 +3,7 @@ description: The at_gauges library comes with highly customizable gauges.
 
 # publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.1
+version: 1.0.2
 homepage: https://github.com/atsign-foundation/at_gauges/
 
 environment:
