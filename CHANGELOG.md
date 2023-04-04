@@ -9,3 +9,6 @@
 * CHORE: gauge images replaced with gif equivalent in README.md
 * CHORE: removed at_radial_gauges folder
 * CHORE: example app updated
+  
+## 1.0.2
+* CHORE: README.md updated to reflect the depreciated state of this package.
